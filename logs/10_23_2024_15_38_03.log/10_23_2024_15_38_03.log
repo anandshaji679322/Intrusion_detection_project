@@ -1,0 +1,18 @@
+[ 2024-10-23 15:38:04,160 ] 97 werkzeug - WARNING -  * Debugger is active!
+[ 2024-10-23 15:38:04,182 ] 97 werkzeug - INFO -  * Debugger PIN: 173-526-570
+[ 2024-10-23 15:38:09,664 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 15:38:09] "GET / HTTP/1.1" 200 -
+[ 2024-10-23 15:38:09,710 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 15:38:09] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-10-23 15:38:18,523 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-10-23 15:38:26,507 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 15:38:26] "POST /predict HTTP/1.1" 200 -
+[ 2024-10-23 15:38:26,563 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 15:38:26] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-10-23 15:40:03,471 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-10-23 15:40:11,876 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 15:40:11] "POST /predict HTTP/1.1" 200 -
+[ 2024-10-23 15:40:11,991 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 15:40:11] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-10-23 15:53:11,976 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-10-23 15:53:14,601 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 15:53:14] "GET / HTTP/1.1" 200 -
+[ 2024-10-23 15:53:14,664 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 15:53:14] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-10-23 15:53:19,895 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 15:53:19] "POST /predict HTTP/1.1" 200 -
+[ 2024-10-23 15:53:38,965 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 15:53:38] "POST /predict HTTP/1.1" 200 -
+[ 2024-10-23 15:53:39,014 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 15:53:39] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-10-23 15:57:00,000 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 15:57:00] "GET / HTTP/1.1" 200 -
+[ 2024-10-23 15:57:00,052 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 15:57:00] "[33mGET /styles.css HTTP/1.1[0m" 404 -

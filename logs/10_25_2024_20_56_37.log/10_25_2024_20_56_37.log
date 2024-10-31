@@ -1,0 +1,32 @@
+[ 2024-10-25 20:56:38,367 ] 97 werkzeug - WARNING -  * Debugger is active!
+[ 2024-10-25 20:56:38,941 ] 97 werkzeug - INFO -  * Debugger PIN: 173-526-570
+[ 2024-10-25 20:56:47,877 ] 97 werkzeug - INFO - 127.0.0.1 - - [25/Oct/2024 20:56:47] "POST /receive_data HTTP/1.1" 200 -
+[ 2024-10-25 20:56:47,908 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports', 'attack_cat', 'label']
+[ 2024-10-25 20:56:47,923 ] 78 root - ERROR - Error occurred during preprocessing
+[ 2024-10-25 20:56:47,924 ] 123 root - ERROR - Exception occurred in prediction pipeline
+[ 2024-10-25 20:56:52,946 ] 97 werkzeug - INFO - 127.0.0.1 - - [25/Oct/2024 20:56:52] "POST /receive_data HTTP/1.1" 200 -
+[ 2024-10-25 20:56:52,949 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports', 'attack_cat', 'label']
+[ 2024-10-25 20:56:52,962 ] 78 root - ERROR - Error occurred during preprocessing
+[ 2024-10-25 20:56:52,962 ] 123 root - ERROR - Exception occurred in prediction pipeline
+[ 2024-10-25 20:56:58,011 ] 97 werkzeug - INFO - 127.0.0.1 - - [25/Oct/2024 20:56:58] "POST /receive_data HTTP/1.1" 200 -
+[ 2024-10-25 20:56:58,014 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports', 'attack_cat', 'label']
+[ 2024-10-25 20:56:58,025 ] 78 root - ERROR - Error occurred during preprocessing
+[ 2024-10-25 20:56:58,026 ] 123 root - ERROR - Exception occurred in prediction pipeline
+[ 2024-10-25 20:57:03,079 ] 97 werkzeug - INFO - 127.0.0.1 - - [25/Oct/2024 20:57:03] "POST /receive_data HTTP/1.1" 200 -
+[ 2024-10-25 20:57:03,082 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports', 'attack_cat', 'label']
+[ 2024-10-25 20:57:03,115 ] 120 root - ERROR - Value error occurred: The feature names should match those that were passed during fit.
+Feature names unseen at fit time:
+- label
+
+[ 2024-10-25 20:57:08,136 ] 97 werkzeug - INFO - 127.0.0.1 - - [25/Oct/2024 20:57:08] "POST /receive_data HTTP/1.1" 200 -
+[ 2024-10-25 20:57:08,140 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports', 'attack_cat', 'label']
+[ 2024-10-25 20:57:08,156 ] 78 root - ERROR - Error occurred during preprocessing
+[ 2024-10-25 20:57:08,156 ] 123 root - ERROR - Exception occurred in prediction pipeline
+[ 2024-10-25 20:57:13,190 ] 97 werkzeug - INFO - 127.0.0.1 - - [25/Oct/2024 20:57:13] "POST /receive_data HTTP/1.1" 200 -
+[ 2024-10-25 20:57:13,193 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports', 'attack_cat', 'label']
+[ 2024-10-25 20:57:13,203 ] 78 root - ERROR - Error occurred during preprocessing
+[ 2024-10-25 20:57:13,204 ] 123 root - ERROR - Exception occurred in prediction pipeline
+[ 2024-10-25 20:57:18,252 ] 97 werkzeug - INFO - 127.0.0.1 - - [25/Oct/2024 20:57:18] "POST /receive_data HTTP/1.1" 200 -
+[ 2024-10-25 20:57:18,255 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports', 'attack_cat', 'label']
+[ 2024-10-25 20:57:18,266 ] 78 root - ERROR - Error occurred during preprocessing
+[ 2024-10-25 20:57:18,266 ] 123 root - ERROR - Exception occurred in prediction pipeline
