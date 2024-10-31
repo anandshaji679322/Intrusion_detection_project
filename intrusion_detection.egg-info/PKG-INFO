@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: intrusion-detection
+Version: 0.0.1
+Author: abhika
+Author-email: aneetapt17@gmail.com
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: matplotlib
+Requires-Dist: seaborn
+Requires-Dist: scikit-learn
+Requires-Dist: tensorflow
+Requires-Dist: dill
+Requires-Dist: flask
