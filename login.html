@@ -16,17 +16,28 @@
     <script src="auth.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Login to Medical IoT</h1>
-    </header>
-    <form id="loginForm" onsubmit="login(event)">
+    <div class="outer-div">
+        <div class="mid-square inner-div">
+            <p class="in-heading">Log In</p>
+            <form id="loginForm" onsubmit="login(event)">
+                <input type="text" id="username" name="username" placeholder="Email/Username" required>
+                <input type="password"  id="password" name="password" placeholder="Password" required>
+                
+                <button class="button in-button" type="submit">Login</button> 
+                <p>Don't have an account? <a href="register.html">Sign In</a></p>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- <form id="loginForm" onsubmit="login(event)">
         <label for="username">Username or Email:</label>
-        <input type="text" id="username" name="username" required>
+        <input type="text" id="username" nam.e="username" required>
         
         <label for="password">Password:</label>
         <input type="password"  id="password" name="password" required>
         
-        <button type="submit">Login</button>
-    </form>
+        <button type="submit">Login</button> 
+    </form> -->
 </body>
 </html>
