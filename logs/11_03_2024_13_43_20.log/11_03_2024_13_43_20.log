@@ -1,0 +1,26 @@
+[ 2024-11-03 13:43:20,396 ] 97 werkzeug - WARNING -  * Debugger is active!
+[ 2024-11-03 13:43:20,771 ] 97 werkzeug - INFO -  * Debugger PIN: 173-526-570
+[ 2024-11-03 13:43:22,787 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:43:22] "GET / HTTP/1.1" 200 -
+[ 2024-11-03 13:43:22,811 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:43:22] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-03 13:43:24,159 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:43:24] "GET /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-03 13:43:24,189 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:43:24] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-03 13:43:29,407 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-03 13:43:29,429 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:43:29] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-03 13:43:29,455 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:43:29] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-03 13:43:33,641 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:43:33] "GET /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-03 13:43:36,216 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:43:36] "GET /real_time_prediction HTTP/1.1" 200 -
+[ 2024-11-03 13:46:17,726 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:46:17] "GET / HTTP/1.1" 200 -
+[ 2024-11-03 13:46:17,755 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:46:17] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-03 13:46:19,136 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:46:19] "GET /real_time_prediction HTTP/1.1" 200 -
+[ 2024-11-03 13:46:19,165 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:46:19] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-03 13:47:12,224 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:47:12] "POST /receive_data HTTP/1.1" 200 -
+[ 2024-11-03 13:47:12,226 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-03 13:47:16,296 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:47:16] "GET /real_time_prediction HTTP/1.1" 200 -
+[ 2024-11-03 13:47:16,319 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:47:16] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-03 13:47:18,834 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:47:18] "GET /real_time_prediction HTTP/1.1" 200 -
+[ 2024-11-03 13:47:18,855 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:47:18] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-03 13:47:21,631 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:47:21] "GET /real_time_prediction HTTP/1.1" 200 -
+[ 2024-11-03 13:47:21,660 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:47:21] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-03 13:47:23,464 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:47:23] "GET /real_time_prediction HTTP/1.1" 200 -
+[ 2024-11-03 13:47:23,487 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:47:23] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-03 13:52:38,120 ] 97 werkzeug - INFO -  * Detected change in 'D:\\files\\intrusion\\app.py', reloading

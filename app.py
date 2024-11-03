@@ -1,10 +1,11 @@
 from flask import Flask, request, render_template, jsonify
 from flask_cors import CORS, cross_origin
 import pandas as pd
-import time
 from threading import Thread
+import time
 from src.pipeline.predict_pipeline import PredictPipeline  # Your existing PredictPipeline class
-import datetime
+import subprocess  # For running the send_data.py script
+
 app = Flask(__name__)
 CORS(app)
 
@@ -14,7 +15,52 @@ predicted_results = []
 @app.route('/')
 @cross_origin()
 def home_page():
-    return render_template('index.html')
+    return render_template('home.html')  # Home page with options
+
+@app.route('/upload_dataset', methods=['GET', 'POST'])
+@cross_origin()
+def upload_dataset():
+    if request.method == 'POST':
+        # Handle dataset upload
+        if 'dataset' not in request.files:
+            return render_template('upload.html', results='Error: No file uploaded')
+
+        file = request.files['dataset']
+        if file.filename == '':
+            return render_template('upload.html', results='Error: No file selected')
+
+        try:
+            # Read the dataset based on file type directly from the uploaded file
+            if file.filename.endswith('.csv'):
+                dataset = pd.read_csv(file)
+            elif file.filename.endswith('.xlsx'):
+                dataset = pd.read_excel(file)
+            elif file.filename.endswith('.json'):
+                dataset = pd.read_json(file)
+            else:
+                return render_template('upload.html', results='Error: Unsupported file type')
+
+            # Initialize the prediction pipeline for intrusion detection
+            predict_pipeline = PredictPipeline()
+            predicted_attacks = predict_pipeline.predict(dataset)
+
+            # Add predictions to dataset
+            dataset['Predicted_Attack'] = predicted_attacks
+
+            # Convert the results to HTML table to display
+            table_html = dataset[['Predicted_Attack']].to_html(classes='table table-striped', index=False)
+
+            return render_template('upload.html', results=table_html)
+
+        except Exception as e:
+            return render_template('upload.html', results=f"Error: {str(e)}")
+
+    return render_template('upload.html')  # Show the upload form
+
+@app.route('/real_time_prediction', methods=['GET'])
+@cross_origin()
+def real_time_prediction():
+    return render_template('real_time.html')  # A separate HTML page for real-time predictions
 
 # Function to process incoming data and make predictions
 def process_real_time_data(single_row):
@@ -26,7 +72,7 @@ def process_real_time_data(single_row):
     
     # Make prediction
     predicted_attack = predict_pipeline.predict(single_row_df)
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
     
     # Store the prediction result for the live dashboard
     predicted_results.append({
@@ -56,6 +102,19 @@ def receive_data():
 def get_results():
     global predicted_results
     return jsonify(predicted_results)
+
+# Endpoint to start sending data
+@app.route('/start_sending_data', methods=['GET'])
+@cross_origin()
+def start_sending_data():
+    # Start the send_data.py script in a new thread
+    thread = Thread(target=run_send_data_script)
+    thread.start()
+    return jsonify({'message': 'Started sending data for real-time predictions'})
+
+def run_send_data_script():
+    # Replace 'send_data.py' with the actual path to your script
+    subprocess.run(['python', 'send_data.py'])
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
