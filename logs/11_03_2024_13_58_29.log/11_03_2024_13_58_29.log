@@ -1,0 +1,17 @@
+[ 2024-11-03 13:58:30,212 ] 97 werkzeug - WARNING -  * Debugger is active!
+[ 2024-11-03 13:58:32,347 ] 97 werkzeug - INFO -  * Debugger PIN: 173-526-570
+[ 2024-11-03 13:58:33,276 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:58:33] "GET / HTTP/1.1" 200 -
+[ 2024-11-03 13:58:33,303 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:58:33] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-03 13:58:37,283 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:58:37] "GET /real_time_prediction HTTP/1.1" 200 -
+[ 2024-11-03 13:58:37,312 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:58:37] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-03 13:58:40,318 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:58:40] "GET /results HTTP/1.1" 200 -
+[ 2024-11-03 13:58:41,070 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:58:41] "GET /start_sending_data HTTP/1.1" 200 -
+[ 2024-11-03 13:58:43,319 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:58:43] "GET /results HTTP/1.1" 200 -
+[ 2024-11-03 13:58:46,661 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:58:46] "GET /results HTTP/1.1" 200 -
+[ 2024-11-03 13:58:49,664 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:58:49] "GET /results HTTP/1.1" 200 -
+[ 2024-11-03 13:58:52,664 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:58:52] "GET /results HTTP/1.1" 200 -
+[ 2024-11-03 13:58:55,652 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:58:55] "GET /results HTTP/1.1" 200 -
+[ 2024-11-03 13:58:58,662 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:58:58] "GET /results HTTP/1.1" 200 -
+[ 2024-11-03 13:59:01,664 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:59:01] "GET /results HTTP/1.1" 200 -
+[ 2024-11-03 13:59:04,666 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:59:04] "GET /results HTTP/1.1" 200 -
+[ 2024-11-03 13:59:06,907 ] 97 werkzeug - INFO -  * Detected change in 'D:\\files\\intrusion\\app.py', reloading
