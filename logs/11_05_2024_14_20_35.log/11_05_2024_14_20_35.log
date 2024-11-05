@@ -1,0 +1,12 @@
+[ 2024-11-05 14:20:37,397 ] 97 werkzeug - WARNING -  * Debugger is active!
+[ 2024-11-05 14:20:37,402 ] 97 werkzeug - INFO -  * Debugger PIN: 136-839-380
+[ 2024-11-05 14:20:53,813 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:20:53] "GET /home HTTP/1.1" 200 -
+[ 2024-11-05 14:20:53,928 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:20:53] "GET /static/styles.css HTTP/1.1" 200 -
+[ 2024-11-05 14:20:56,923 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:20:56] "[31m[1mGET /upload_dataset HTTP/1.1[0m" 405 -
+[ 2024-11-05 14:21:46,642 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:21:46] "[31m[1mGET /upload_dataset HTTP/1.1[0m" 405 -
+[ 2024-11-05 14:21:51,688 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:21:51] "[31m[1mGET /upload_dataset HTTP/1.1[0m" 405 -
+[ 2024-11-05 14:22:34,467 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:22:34] "[31m[1mGET /upload_dataset HTTP/1.1[0m" 405 -
+[ 2024-11-05 14:22:37,034 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:22:37] "GET /real_time_prediction HTTP/1.1" 200 -
+[ 2024-11-05 14:22:37,063 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:22:37] "GET /static/styles.css HTTP/1.1" 200 -
+[ 2024-11-05 14:22:40,295 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:22:40] "[31m[1mGET /upload_dataset HTTP/1.1[0m" 405 -
+[ 2024-11-05 14:22:53,370 ] 97 werkzeug - INFO -  * Detected change in 'c:\\users\\anand\\downloads\\intrusion_detection_project\\app.py', reloading

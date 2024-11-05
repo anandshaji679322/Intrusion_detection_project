@@ -1,0 +1,13 @@
+[ 2024-11-05 14:36:43,913 ] 97 werkzeug - WARNING -  * Debugger is active!
+[ 2024-11-05 14:36:43,917 ] 97 werkzeug - INFO -  * Debugger PIN: 136-839-380
+[ 2024-11-05 14:37:07,306 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:37:07] "GET /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:37:08,482 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:37:08] "GET /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:37:08,569 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:37:08] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:37:16,581 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 14:37:16,678 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:37:16] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:37:16,700 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:37:16] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:37:30,946 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:37:30] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:37:30,972 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:37:30] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:37:41,024 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 14:37:41,091 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:37:41] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:37:41,111 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:37:41] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -

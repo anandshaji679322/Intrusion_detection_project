@@ -1,0 +1,62 @@
+[ 2024-11-05 14:46:29,941 ] 97 werkzeug - WARNING -  * Debugger is active!
+[ 2024-11-05 14:46:29,947 ] 97 werkzeug - INFO -  * Debugger PIN: 136-839-380
+[ 2024-11-05 14:46:41,416 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:46:41] "GET /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:46:41,516 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:46:41] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:46:47,788 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 14:46:47,867 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:46:47] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:46:47,891 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:46:47] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:48:40,158 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:48:40] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:48:40,188 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:48:40] "GET /static/styles.css HTTP/1.1" 200 -
+[ 2024-11-05 14:48:55,822 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 14:48:55,897 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:48:55] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:48:55,916 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:48:55] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:49:13,326 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 14:49:13,361 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:49:13] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:49:13,388 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:49:13] "GET /static/styles.css HTTP/1.1" 200 -
+[ 2024-11-05 14:49:19,158 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 14:49:19,230 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:49:19] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:49:19,252 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:49:19] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:49:45,630 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:49:45] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:49:45,649 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:49:45] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:49:47,887 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:49:47] "GET /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:49:50,601 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 14:49:50,679 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:49:50] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:49:50,697 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:49:50] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:49:53,257 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:49:53] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:49:53,279 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:49:53] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:49:59,083 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 14:49:59,140 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:49:59] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:49:59,164 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:49:59] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:53:30,610 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:53:30] "GET /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:53:30,641 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:53:30] "GET /static/styles.css HTTP/1.1" 200 -
+[ 2024-11-05 14:53:36,581 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 14:53:36,641 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:53:36] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:53:36,661 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:53:36] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:53:45,353 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 14:53:45,405 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:53:45] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:53:45,427 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:53:45] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:56:04,985 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 14:56:05,019 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:05] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:56:05,041 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:05] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:56:06,107 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:06] "GET /upload_dataset?dataset= HTTP/1.1" 200 -
+[ 2024-11-05 14:56:06,130 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:06] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:56:08,550 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:08] "GET / HTTP/1.1" 200 -
+[ 2024-11-05 14:56:08,568 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:08] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:56:10,959 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:10] "GET /login HTTP/1.1" 200 -
+[ 2024-11-05 14:56:10,992 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:10] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:56:10,996 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:10] "[36mGET /static/auth.js HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:56:20,012 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:20] "GET /home HTTP/1.1" 200 -
+[ 2024-11-05 14:56:20,039 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:20] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:56:22,691 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:22] "GET /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:56:22,724 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:22] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:56:30,276 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:30] "GET /upload_dataset?dataset=test.xlsx HTTP/1.1" 200 -
+[ 2024-11-05 14:56:30,296 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:56:30] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:57:19,140 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:57:19] "GET / HTTP/1.1" 200 -
+[ 2024-11-05 14:57:19,172 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:57:19] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:57:21,279 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:57:21] "GET /login HTTP/1.1" 200 -
+[ 2024-11-05 14:57:21,314 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:57:21] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:57:21,318 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:57:21] "[36mGET /static/auth.js HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:57:29,810 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:57:29] "GET /home HTTP/1.1" 200 -
+[ 2024-11-05 14:57:29,844 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:57:29] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:57:32,572 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:57:32] "[33mGET /upload HTTP/1.1[0m" 404 -
+[ 2024-11-05 14:57:50,916 ] 97 werkzeug - INFO -  * Detected change in 'C:\\Users\\ANAND\\Downloads\\Intrusion_detection_project\\app.py', reloading
