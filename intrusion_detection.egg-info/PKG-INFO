@@ -11,3 +11,4 @@ Requires-Dist: scikit-learn
 Requires-Dist: tensorflow
 Requires-Dist: dill
 Requires-Dist: flask
+Requires-Dist: flask-cors

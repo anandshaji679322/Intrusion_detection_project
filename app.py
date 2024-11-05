@@ -14,8 +14,23 @@ predicted_results = []
 
 @app.route('/')
 @cross_origin()
+def index_page():
+    return render_template('index.html')
+
+@app.route('/login')
+@cross_origin()
+def login_page():
+    return render_template('login.html')
+
+@app.route('/home')
+@cross_origin()
 def home_page():
-    return render_template('home.html')  # Home page with options
+    return render_template('home.html')
+
+@app.route('/register')
+@cross_origin()
+def register_page():
+    return render_template('register.html')
 
 @app.route('/upload_dataset', methods=['GET', 'POST'])
 @cross_origin()

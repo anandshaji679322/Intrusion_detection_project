@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Medical IoT</title>
-    <link rel="stylesheet" href="styles.css">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical IoT Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
 
     <!-- Load Firebase App (core SDK) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -13,7 +17,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     
     <!-- Custom Auth JS -->
-    <script src="auth.js"></script>
+    <script src="{{ url_for('static', filename='auth.js') }}"></script>
 </head>
 <body>
     <div class="outer-div">
@@ -24,7 +28,7 @@
                 <input type="password"  id="password" name="password" placeholder="Password" required>
                 
                 <button class="button in-button" type="submit">Login</button> 
-                <p>Don't have an account? <a href="register.html">Sign In</a></p>
+                <p>Don't have an account? <a href="register">Sign In</a></p>
             </form>
 
         </div>
