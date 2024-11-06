@@ -4,74 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real-Time Prediction</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: 'Jura', sans-serif;
-            background-color: #f4f4f4;
-            padding: 20px;
-        }
-        .outer-div {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
-        .button:hover {
-            background-color: #45a049;
-        }
-        #result {
-            margin-top: 20px;
-        }
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="outer-div">
-        <h1>Real-Time Prediction</h1>
-        <p>Click the button below to start sending data for real-time predictions:</p>
-        <button id="start-button" class="button">Start Predictions</button>
-        <div id="result"></div>
-        <div id="predictions">
-            <h2>Live Predictions:</h2>
-            <table id="predictions-table">
-                <thead>
-                    <tr>
-                        <th>Timestamp</th>
-                        <th>Predicted Attack</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Dynamic content will be added here -->
-                </tbody>
-            </table>
-        </div>
+    <div class="outer-div" id="top-tab">
+            <div class="top-square" >
+                <p class="in-heading">Real-Time Prediction</p>
+                <p>Click the button below to start sending data for real-time predictions!</p>
+                <button id="start-button" class="button in-button">Start Predictions</button>
+                <div id="result"></div>
+                <div id="predictions">
+                    <h2>Live Predictions:</h2>
+                    <table id="predictions-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Predicted Attack</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamic content will be added here -->
+                        </tbody>
+                    </table>
+            </div>
     </div>
-
     <script>
         document.getElementById('start-button').onclick = function() {
             const resultDiv = document.getElementById('result');

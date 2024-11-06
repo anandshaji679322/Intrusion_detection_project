@@ -22,7 +22,7 @@ function login(event) {
     auth.signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
             // Redirect to the admin page or home page
-            window.location.href = "home.html";
+            window.location.href = "home";
         })
         .catch((error) => {
             console.error('Error during sign-in:', error.message);
@@ -41,7 +41,7 @@ function register(event) {
         .then((userCredential) => {
             // User registration successful
             alert('User registered successfully!');
-            window.location.href = "login.html";
+            window.location.href = "home";
         })
         .catch((error) => {
             console.error('Error during registration:', error.message);
@@ -58,4 +58,3 @@ function logout() {
         alert(error.message);
     });
 }
-
