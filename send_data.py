@@ -3,8 +3,8 @@ import pandas as pd
 import time
 import json
 
-# Path to your Excel file (you can also use CSV or JSON file)
-file_path = 'C:/Users/ANAND/Downloads/Intrusion_detection_project/test.xlsx'  # Change this to the path of your Excel/CSV file
+# Change this to the path of your Excel/CSV file
+file_path = '/app/intrusion/test.xlsx'
 
 # URL of the Flask server
 url = 'http://localhost:8000/receive_data'  # Update if the server URL is different
