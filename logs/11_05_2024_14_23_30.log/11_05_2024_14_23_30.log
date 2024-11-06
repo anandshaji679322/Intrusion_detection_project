@@ -1,0 +1,27 @@
+[ 2024-11-05 14:23:31,692 ] 97 werkzeug - WARNING -  * Debugger is active!
+[ 2024-11-05 14:23:31,694 ] 97 werkzeug - INFO -  * Debugger PIN: 136-839-380
+[ 2024-11-05 14:23:33,301 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:23:33] "GET / HTTP/1.1" 200 -
+[ 2024-11-05 14:23:33,404 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:23:33] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:23:35,712 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:23:35] "GET /login HTTP/1.1" 200 -
+[ 2024-11-05 14:23:35,741 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:23:35] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:23:35,745 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:23:35] "[36mGET /static/auth.js HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:23:45,193 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:23:45] "GET /home HTTP/1.1" 200 -
+[ 2024-11-05 14:23:45,225 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:23:45] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:26:54,554 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:26:54] "GET /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:26:54,586 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:26:54] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:27:05,559 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 14:27:05,676 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:27:05] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:27:05,707 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:27:05] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:28:40,133 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:28:40] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:31:51,719 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:31:51] "GET / HTTP/1.1" 200 -
+[ 2024-11-05 14:31:51,745 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:31:51] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:31:54,897 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:31:54] "GET /login HTTP/1.1" 200 -
+[ 2024-11-05 14:31:54,929 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:31:54] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:31:54,934 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:31:54] "[36mGET /static/auth.js HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:32:03,327 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:32:03] "GET /home HTTP/1.1" 200 -
+[ 2024-11-05 14:32:03,364 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:32:03] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:32:07,841 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:32:07] "GET /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:32:07,870 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:32:07] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2024-11-05 14:32:14,639 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 14:32:14,673 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:32:14] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 14:32:14,690 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:32:14] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -

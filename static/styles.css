@@ -1,0 +1,195 @@
+body {
+    font-family: jura;
+    margin: 0;
+    padding: 0;
+    background-color:black;
+}
+h1{
+    color:#BE3144;
+    font-family: jura;
+    font-size: 10rem;
+    margin:0px;
+}
+.outer-div {
+    display: flex;
+    gap:80px;
+    flex-direction: row;
+    justify-content: center; 
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    text-align: center;
+    margin-left: 50px; /* Remove the existing margin-top */
+    margin-right:150px;
+}
+#upload {
+    flex-direction:column;
+}
+#top-tab 
+{
+    align-items: flex-start;
+}
+.inner-div{
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin:0px;
+}
+.sub{
+    color:#F05941;
+    font-family: jura;
+    font-size:40px;
+    margin:0px;
+}
+.button
+{
+    padding : 10px 30px;
+    margin-top:20px;
+    color:black;
+    background-color: #BE3144;
+    border:none;
+    font-family: jura;
+    font-size:20px;
+    cursor:pointer;
+    transition-duration: 0.4s;
+    border-radius: 3px;
+}
+.in-button
+{
+    background-color:black;
+    color:#BE3144;
+}
+#start
+{
+    text-decoration:none;
+    color:inherit;
+}
+.button:hover
+{
+    background-color:black;
+    color:#BE3144;
+    border:3px solid white;
+}
+
+.in-heading
+{
+    color:white;
+    padding:20px;
+    padding-bottom:0px;
+    font-size: 35px;
+    font-weight: bold;
+}
+#white-box
+{
+    background-color:white;
+    width:400px;
+    height:300px;
+    border-radius: 20px;
+    margin-left: 50px;
+    background-image: url("hacker.jpg");
+}
+.mid-square
+{
+    background-color:#BE3144;
+    width: 421px;
+    height:412px;
+    border-radius:10px;
+    align-items:center;
+}
+.top-square
+{
+    max-width: 600px;
+    margin: 40px;
+    padding: 20px;
+    background-color: #BE3144;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border-radius: 10px;
+
+
+}
+.large
+{
+
+    height:555px;
+}
+/*#grey-box
+{
+    background-color:#0F0C0C;
+    width:500px;
+    height:300px;
+    border-radius: 20px;
+}*/
+header, nav, section {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* .upload-form input[type="file"] {
+    display: none;
+} */
+
+.upload-form {
+    margin-bottom: 20px;
+}
+.upload-form input[type="file"] {
+    margin: 10px 0;
+}
+
+/* Custom button-like label for file upload */
+/* Hover effect for the label */
+/*
+header h1 {
+    margin: 0;
+}
+
+nav a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: #333;
+}*/
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+form input {
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #BE3144;
+    border-radius: 4px;
+}
+label
+{
+    padding-top:10px;
+}
+
+#result {
+    margin-top: 20px;
+}
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid grey;
+    padding: 8px;
+    text-align: center;
+}
+th {
+    background-color: white;
+    color:black;
+}
+
+#text
+{
+    color:white;
+}
