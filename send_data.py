@@ -3,8 +3,8 @@ import pandas as pd
 import time
 import json
 
-# Path to your Excel file (you can also use CSV or JSON file)
-file_path = 'D:/files/intrusion/test.xlsx'  # Change this to the path of your Excel/CSV file
+# Change this to the path of your Excel/CSV file
+file_path = '/app/intrusion/test.xlsx'
 
 # URL of the Flask server
 url = 'http://localhost:8000/receive_data'  # Update if the server URL is different
@@ -34,4 +34,4 @@ for index, row in dataset.iterrows():
         print(f'Failed to send row {index + 1}. Status code: {response.status_code}')
     
     # Pause for a specified amount of time (e.g., 3 seconds) to simulate real-time data streaming
-    time.sleep(30)  # Adjust the sleep time as necessary (e.g., 1 sec, 5 sec)
+    time.sleep(15)  # Adjust the sleep time as necessary (e.g., 1 sec, 5 sec)
