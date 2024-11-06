@@ -1,0 +1,12 @@
+[ 2024-11-05 10:28:44,740 ] 97 werkzeug - WARNING -  * Debugger is active!
+[ 2024-11-05 10:28:45,591 ] 97 werkzeug - INFO -  * Debugger PIN: 173-526-570
+[ 2024-11-05 10:28:58,670 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 10:28:58] "GET / HTTP/1.1" 200 -
+[ 2024-11-05 10:28:58,756 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 10:28:58] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-05 10:28:58,877 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 10:28:58] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[ 2024-11-05 10:29:00,804 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 10:29:00] "GET / HTTP/1.1" 200 -
+[ 2024-11-05 10:29:00,857 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 10:29:00] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-05 10:29:14,852 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 10:29:14] "GET /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 10:29:14,934 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 10:29:14] "[33mGET /styles.css HTTP/1.1[0m" 404 -
+[ 2024-11-05 10:29:31,400 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
+[ 2024-11-05 10:29:31,522 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 10:29:31] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2024-11-05 10:29:31,588 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 10:29:31] "[33mGET /styles.css HTTP/1.1[0m" 404 -

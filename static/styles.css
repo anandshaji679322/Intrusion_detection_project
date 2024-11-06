@@ -85,6 +85,11 @@ h1{
     height:300px;
     border-radius: 20px;
     margin-left: 50px;
+    background-image: url("hacker.jpg");
+    background-size: cover;  
+    background-position: center; 
+    background-repeat: no-repeat; 
+    
 }
 .mid-square
 {
