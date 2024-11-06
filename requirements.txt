@@ -7,4 +7,5 @@ tensorflow
 dill
 flask
 flask-cors
+openpyxl
 -e .
