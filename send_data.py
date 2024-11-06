@@ -34,4 +34,4 @@ for index, row in dataset.iterrows():
         print(f'Failed to send row {index + 1}. Status code: {response.status_code}')
     
     # Pause for a specified amount of time (e.g., 3 seconds) to simulate real-time data streaming
-    time.sleep(15)  # Adjust the sleep time as necessary (e.g., 1 sec, 5 sec)
+    time.sleep(30)  # Adjust the sleep time as necessary (e.g., 1 sec, 5 sec)
