@@ -3,8 +3,8 @@ import pandas as pd
 import time
 import json
 
-# Change this to the path of your Excel/CSV file
-file_path = '/app/intrusion/data.xlsx'
+# Raw string - backslashes are treated literally
+file_path = r'C:\Users\ANAND\OneDrive\Desktop\Intrusion_detection_project\intrusion\data.xlsx'
 
 # URL of the Flask server
 url = 'http://localhost:8000/receive_data'  # Update if the server URL is different
@@ -35,3 +35,14 @@ for index, row in dataset.iterrows():
     
     # Pause for a specified amount of time (e.g., 3 seconds) to simulate real-time data streaming
     time.sleep(30)  # Adjust the sleep time as necessary (e.g., 1 sec, 5 sec)
+
+def send_row_data(row_data):
+    try:
+        response = requests.post(f"{url}/receive_data", json=row_data)
+        result = response.json()
+        
+        # Don't check for error status or show alerts
+        return True
+    except Exception as e:
+        print(f"Error sending data: {str(e)}")
+        return False

@@ -141,22 +141,28 @@ def process_real_time_data(single_row):
 @app.route('/receive_data', methods=['POST'])
 @cross_origin()
 def receive_data():
-    global sending_data
-
-    if not sending_data:
-        return jsonify({'message': 'Data transmission stopped due to detected attack'}), 403
-
+    global predicted_results
     data = request.get_json()
     
-    # Check if the data is valid
-    if not data:
-        return jsonify({'error': 'No data received'}), 400
-
-    # Process the incoming data in a background thread
-    thread = Thread(target=process_real_time_data, args=(data,))
-    thread.start()
-
-    return jsonify({'message': 'Data received and prediction in progress'}), 200
+    # Process data
+    predict_pipeline = PredictPipeline()
+    single_row_df = pd.DataFrame([data])
+    predicted_attack = predict_pipeline.predict(single_row_df)
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    
+    result = {
+        'timestamp': timestamp,
+        'prediction': predicted_attack[0]
+    }
+    predicted_results.append(result)
+    
+    # Send WhatsApp notification for attacks
+    if result['prediction'] != "Normal":
+        print(f"Attack detected: {result['prediction']} at {timestamp}")
+        send_whatsapp_alert(result['prediction'], timestamp)
+    
+    # ALWAYS return success (200 OK) to prevent 403 errors
+    return jsonify({"status": "success"})
 
 # Endpoint to fetch live prediction results for dashboard updates
 @app.route('/results', methods=['GET'])

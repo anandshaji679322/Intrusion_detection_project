@@ -5,6 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real-Time Prediction</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script>
+    // Function to refresh the prediction table
+    function refreshTable() {
+        fetch('/get_predictions')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('table tbody');
+                if (tableBody) {
+                    tableBody.innerHTML = '';  // Clear existing rows
+                    
+                    // Add all predictions
+                    data.predictions.forEach(pred => {
+                        const row = document.createElement('tr');
+                        
+                        // Timestamp cell
+                        const timeCell = document.createElement('td');
+                        timeCell.textContent = pred.timestamp;
+                        row.appendChild(timeCell);
+                        
+                        // Prediction cell
+                        const predCell = document.createElement('td');
+                        predCell.textContent = pred.prediction;
+                        row.appendChild(predCell);
+                        
+                        // Highlight attack rows
+                        if (pred.prediction !== "Normal") {
+                            row.style.backgroundColor = "#ffcccc";
+                        }
+                        
+                        tableBody.appendChild(row);
+                    });
+                }
+            })
+            .catch(error => console.error('Error refreshing table:', error));
+    }
+
+    // Refresh table every 2 seconds
+    setInterval(refreshTable, 2000);
+    </script>
 </head>
 <body>
     <div class="outer-div" id="top-tab">
@@ -31,6 +70,43 @@
     </div>
 
     <script>
+            // Function to refresh the prediction table
+            function refreshTable() {
+                fetch('/get_predictions')
+                    .then(response => response.json())
+                    .then(data => {
+                        const tableBody = document.querySelector('table tbody');
+                        tableBody.innerHTML = '';  // Clear existing rows
+                        
+                        // Add all predictions
+                        data.predictions.forEach(pred => {
+                            const row = document.createElement('tr');
+                            
+                            // Add timestamp cell
+                            const timeCell = document.createElement('td');
+                            timeCell.textContent = pred.timestamp;
+                            row.appendChild(timeCell);
+                            
+                            // Add prediction cell
+                            const predCell = document.createElement('td');
+                            predCell.textContent = pred.prediction;
+                            
+                            // Add class for attack rows
+                            if (pred.prediction !== "Normal") {
+                                row.className = "attack-row";
+                            }
+                            
+                            row.appendChild(predCell);
+                            tableBody.appendChild(row);
+                        });
+                    });
+            }
+            
+            // Refresh table every 2 seconds
+            setInterval(refreshTable, 2000);
+
+
+        
         document.getElementById('start-button').onclick = function() {
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = "<p>Starting data sending...</p>";
