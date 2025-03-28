@@ -8,31 +8,33 @@
 </head>
 <body>
     <div class="outer-div" id="top-tab">
-            <div class="top-square" >
-                <p class="in-heading">Real-Time Prediction</p>
-                <p>Click the button below to start sending data for real-time predictions!</p>
-                <button id="start-button" class="button in-button">Start Predictions</button>
-                <div id="result"></div>
-                <div id="predictions">
-                    <h2>Live Predictions:</h2>
-                    <table id="predictions-table">
-                        <thead>
-                            <tr>
-                                <th>Timestamp</th>
-                                <th>Predicted Attack</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Dynamic content will be added here -->
-                        </tbody>
-                    </table>
+        <div class="top-square">
+            <p class="in-heading">Real-Time Prediction</p>
+            <p>Click the button below to start sending data for real-time predictions!</p>
+            <button id="start-button" class="button in-button">Start Predictions</button>
+            <div id="result"></div>
+            <div id="predictions">
+                <h2>Live Predictions:</h2>
+                <table id="predictions-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Predicted Attack</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dynamic content will be added here -->
+                    </tbody>
+                </table>
             </div>
+        </div>
     </div>
+
     <script>
         document.getElementById('start-button').onclick = function() {
             const resultDiv = document.getElementById('result');
             resultDiv.innerHTML = "<p>Starting data sending...</p>";
-            // Start the sending data process
+
             fetch('/start_sending_data')
                 .then(response => response.json())
                 .then(data => {
@@ -43,7 +45,6 @@
                 });
         };
 
-        // Function to fetch prediction results
         function fetchResults() {
             fetch('/results')
                 .then(response => response.json())
@@ -52,6 +53,12 @@
                     tableBody.innerHTML = ''; // Clear previous results
 
                     data.forEach(result => {
+                        if (result.alert) {
+                            alert(result.alert); // Show alert
+                            document.getElementById('start-button').disabled = true; // Disable button
+                            return;
+                        }
+
                         const newRow = tableBody.insertRow();
                         const timestampCell = newRow.insertCell(0);
                         const predictionCell = newRow.insertCell(1);

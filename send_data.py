@@ -4,7 +4,7 @@ import time
 import json
 
 # Change this to the path of your Excel/CSV file
-file_path = '/app/intrusion/test.xlsx'
+file_path = r'C:\Users\ANAND\OneDrive\Desktop\Intrusion_detection_project\intrusion\test.xlsx'  # Update with actual file location
 
 # URL of the Flask server
 url = 'http://localhost:8000/receive_data'  # Update if the server URL is different

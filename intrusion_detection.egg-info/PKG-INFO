@@ -12,3 +12,4 @@ Requires-Dist: tensorflow
 Requires-Dist: dill
 Requires-Dist: flask
 Requires-Dist: flask-cors
+Requires-Dist: openpyxl

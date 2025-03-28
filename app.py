@@ -5,12 +5,22 @@ from threading import Thread
 import time
 from src.pipeline.predict_pipeline import PredictPipeline  # Your existing PredictPipeline class
 import subprocess  # For running the send_data.py script
+from twilio.rest import Client
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 CORS(app)
 
 # Global variable to store live results for the dashboard
 predicted_results = []
+sending_data = True  # Flag to control data transmission
+
+# Twilio WhatsApp configuration
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")  # Replace with your Twilio SID
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")     # Replace with your Twilio token
+TWILIO_WHATSAPP_NUMBER = os.getenv("TWILIO_WHATSAPP_NUMBER")  # Twilio's WhatsApp sandbox number
+RECIPIENT_WHATSAPP_NUMBER = os.getenv("RECIPIENT_WHATSAPP_NUMBER") # Your WhatsApp number (with country code)
 
 @app.route('/')
 @cross_origin()
@@ -77,9 +87,30 @@ def upload_dataset():
 def real_time_prediction():
     return render_template('real_time.html')  # A separate HTML page for real-time predictions
 
+# Function to send WhatsApp notification
+def send_whatsapp_alert(attack_type, timestamp):
+    try:
+        client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+        
+        # Create message content
+        message_body = f"🚨 SECURITY ALERT: {attack_type} attack detected at {timestamp}! Immediate action required."
+        
+        # Send WhatsApp message
+        message = client.messages.create(
+            body=message_body,
+            from_=TWILIO_WHATSAPP_NUMBER,
+            to=RECIPIENT_WHATSAPP_NUMBER
+        )
+        
+        print(f"WhatsApp notification sent! SID: {message.sid}")
+        return True
+    except Exception as e:
+        print(f"Failed to send WhatsApp notification: {str(e)}")
+        return False
+
 # Function to process incoming data and make predictions
 def process_real_time_data(single_row):
-    global predicted_results
+    global predicted_results, sending_data
     predict_pipeline = PredictPipeline()
     
     # Convert the incoming single-row dictionary to DataFrame
@@ -90,15 +121,31 @@ def process_real_time_data(single_row):
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
     
     # Store the prediction result for the live dashboard
-    predicted_results.append({
+    result = {
         'timestamp': timestamp,
         'prediction': predicted_attack[0]
-    })
+    }
+    predicted_results.append(result)
+
+    # If an attack is detected, send WhatsApp notification
+    if result['prediction'] != "Normal":
+        print(f"⚠️ Attack Detected: {result['prediction']} at {timestamp}")
+        
+        # Send WhatsApp notification about the attack
+        send_whatsapp_alert(result['prediction'], timestamp)
+        
+        # You can choose to still stop data transmission or continue
+        sending_data = False
 
 # API endpoint to receive real-time data and make predictions
 @app.route('/receive_data', methods=['POST'])
 @cross_origin()
 def receive_data():
+    global sending_data
+
+    if not sending_data:
+        return jsonify({'message': 'Data transmission stopped due to detected attack'}), 403
+
     data = request.get_json()
     
     # Check if the data is valid
@@ -115,13 +162,22 @@ def receive_data():
 @app.route('/results', methods=['GET'])
 @cross_origin()
 def get_results():
-    global predicted_results
+    global predicted_results, sending_data
+
+    # If an attack is detected, include an alert message
+    for result in predicted_results:
+        if result["prediction"] != "Normal":
+            return jsonify(predicted_results + [{"alert": "Attack Detected! Data Transmission Stopped."}])
+
     return jsonify(predicted_results)
 
 # Endpoint to start sending data
 @app.route('/start_sending_data', methods=['GET'])
 @cross_origin()
 def start_sending_data():
+    global sending_data
+    sending_data = True  # Reset data transmission if it was stopped
+
     # Start the send_data.py script in a new thread
     thread = Thread(target=run_send_data_script)
     thread.start()
