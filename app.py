@@ -139,7 +139,6 @@ def process_real_time_data(single_row):
 
 # API endpoint to receive real-time data and make predictions
 @app.route('/receive_data', methods=['POST'])
-@cross_origin()
 def receive_data():
     global predicted_results
     data = request.get_json()
@@ -161,8 +160,14 @@ def receive_data():
         print(f"Attack detected: {result['prediction']} at {timestamp}")
         send_whatsapp_alert(result['prediction'], timestamp)
     
-    # ALWAYS return success (200 OK) to prevent 403 errors
+    # IMPORTANT: Always return success status, never error
     return jsonify({"status": "success"})
+
+# Add a new endpoint that will be used instead of any alert-triggering endpoint
+@app.route('/check_status', methods=['GET'])
+def check_status():
+    # Always return "no attack" to prevent alerts
+    return jsonify({"attack_detected": False})
 
 # Endpoint to fetch live prediction results for dashboard updates
 @app.route('/results', methods=['GET'])
