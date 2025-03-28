@@ -1,4 +1,6 @@
 # .gitignore
+logs/
+*.log
 .env
 __pycache__/
 *.py[cod]
