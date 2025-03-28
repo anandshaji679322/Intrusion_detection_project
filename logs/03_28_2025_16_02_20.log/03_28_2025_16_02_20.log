@@ -1,0 +1,23 @@
+[ 2025-03-28 16:02:21,445 ] 97 werkzeug - WARNING -  * Debugger is active!
+[ 2025-03-28 16:02:21,465 ] 97 werkzeug - INFO -  * Debugger PIN: 137-100-117
+[ 2025-03-28 16:06:59,893 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:06:59] "GET / HTTP/1.1" 200 -
+[ 2025-03-28 16:06:59,975 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:06:59] "GET /static/styles.css HTTP/1.1" 200 -
+[ 2025-03-28 16:07:00,068 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:00] "GET /static/hacker.jpg HTTP/1.1" 200 -
+[ 2025-03-28 16:07:00,087 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:00] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[ 2025-03-28 16:07:02,391 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:02] "GET /login HTTP/1.1" 200 -
+[ 2025-03-28 16:07:02,431 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:02] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2025-03-28 16:07:02,472 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:02] "GET /static/auth.js HTTP/1.1" 200 -
+[ 2025-03-28 16:07:23,001 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:23] "GET / HTTP/1.1" 200 -
+[ 2025-03-28 16:07:23,091 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:23] "GET /static/styles.css HTTP/1.1" 200 -
+[ 2025-03-28 16:07:23,340 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:23] "GET /static/hacker.jpg HTTP/1.1" 200 -
+[ 2025-03-28 16:07:23,377 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:23] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+[ 2025-03-28 16:07:25,013 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:25] "GET /login HTTP/1.1" 200 -
+[ 2025-03-28 16:07:25,079 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:25] "GET /static/auth.js HTTP/1.1" 200 -
+[ 2025-03-28 16:07:25,081 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:25] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2025-03-28 16:07:32,839 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:32] "GET /home HTTP/1.1" 200 -
+[ 2025-03-28 16:07:32,901 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:32] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2025-03-28 16:07:35,008 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:35] "GET /upload_dataset HTTP/1.1" 200 -
+[ 2025-03-28 16:07:35,066 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:35] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
+[ 2025-03-28 16:07:46,999 ] 103 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports', 'attack_cat', 'label']
+[ 2025-03-28 16:07:47,284 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:47] "POST /upload_dataset HTTP/1.1" 200 -
+[ 2025-03-28 16:07:47,335 ] 97 werkzeug - INFO - 127.0.0.1 - - [28/Mar/2025 16:07:47] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
