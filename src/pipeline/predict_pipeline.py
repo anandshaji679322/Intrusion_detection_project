@@ -31,12 +31,10 @@ class PredictPipeline:
             data.dropna(inplace=True)
 
             # Columns classification
-            nominal_names = ['proto', 'service', 'state']
-            integer_names = ['sbytes', 'dbytes', 'sttl', 'dttl', 'sloss', 'dloss', 'swin', 'stcpb', 'dtcpb', 'dwin',
-                             'trans_depth', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm',
-                             'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_srv_dst']
-            binary_names = ['is_ftp_login', 'is_sm_ips_ports']
-            float_names = ['dur', 'tcprtt', 'synack', 'ackdat']
+            nominal_names = ['srcip', 'dstip', 'proto', 'state', 'service', 'attack_cat']
+            integer_names = ['sport', 'dsport', 'sbytes', 'dbytes', 'sttl', 'dttl', 'sloss', 'dloss', 'Spkts', 'Dpkts', 'swin', 'dwin', 'stcpb', 'dtcpb', 'smeansz', 'dmeansz', 'trans_depth', 'res_bdy_len', 'ct_state_ttl', 'ct_flw_http_mthd', 'ct_ftp_cmd', 'ct_srv_src', 'ct_srv_dst', 'ct_dst_ltm', 'ct_src_ ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm']
+            binary_names = ['is_sm_ips_ports', 'is_ftp_login', 'Label']
+            float_names = ['dur', 'Sload', 'Dload', 'Sjit', 'Djit', 'Sintpkt', 'Dintpkt', 'tcprtt', 'synack', 'ackdat']
             cols = data.columns
 
             # Select only available columns
@@ -53,13 +51,21 @@ class PredictPipeline:
             for c in float_names:
                 data[c] = pd.to_numeric(data[c])
 
+            num_col = data.select_dtypes(include='number').columns
+
+            # selecting categorical data attributes
+            cat_col = data.columns.difference(num_col)
+            cat_col = cat_col[1:]
+            data_cat = data[cat_col].copy()
+            data_cat = pd.get_dummies(data_cat,columns=cat_col)
+            data = pd.concat([data, data_cat],axis=1)
+            data.drop(columns=cat_col,inplace=True)
             # Normalize numerical columns
-            num_col = list(data.select_dtypes(include='number').columns)
-            num_col.remove('id')  # Assuming 'id' exists, otherwise adjust accordingly
-
-            # Normalization
+            
             minmax_scale = MinMaxScaler(feature_range=(0, 1))
-
+            num_col = list(data.select_dtypes(include='number').columns)
+            num_col.remove('id')
+            num_col.remove('label')
             def normalization(df, col):
                 for i in col:
                     arr = df[i]
@@ -68,8 +74,17 @@ class PredictPipeline:
                 return df
 
             multi_data = normalization(data.copy(), num_col)
-            
-            required_columns = ['dttl', 'swin', 'dwin', 'tcprtt', 'synack', 'ackdat', 'label']
+            multi_label = pd.DataFrame(multi_data.attack_cat)
+
+
+
+            required_columns =  ['dur', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl',
+       'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit',
+       'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean',
+       'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src',
+       'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm',
+       'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd',
+       'ct_src_ltm', 'ct_srv_dst']
             available_columns = [col for col in required_columns if col in multi_data.columns]
 
             return multi_data[available_columns] 
