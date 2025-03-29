@@ -15,6 +15,7 @@ CORS(app)
 # Global variable to store live results for the dashboard
 predicted_results = []
 sending_data = True  # Flag to control data transmission
+data_process = None  # Global variable to track the subprocess
 
 # Twilio WhatsApp configuration
 TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")  # Replace with your Twilio SID
@@ -166,27 +167,26 @@ def receive_data():
 # Add a new endpoint that will be used instead of any alert-triggering endpoint
 @app.route('/check_status', methods=['GET'])
 def check_status():
-    # Always return "no attack" to prevent alerts
-    return jsonify({"attack_detected": False})
+    global sending_data
+    # Always return "no attack" to prevent alerts, but include the stop flag
+    return jsonify({
+        "attack_detected": False,
+        "stop_sending": not sending_data  # If sending_data is False, we want to stop
+    })
 
 # Endpoint to fetch live prediction results for dashboard updates
 @app.route('/results', methods=['GET'])
 @cross_origin()
 def get_results():
-    global predicted_results, sending_data
-
-    # If an attack is detected, include an alert message
-    for result in predicted_results:
-        if result["prediction"] != "Normal":
-            return jsonify(predicted_results + [{"alert": "Attack Detected! Data Transmission Stopped."}])
-
+    global predicted_results
+    # Return only the prediction results without any alert messages
     return jsonify(predicted_results)
 
 # Endpoint to start sending data
 @app.route('/start_sending_data', methods=['GET'])
 @cross_origin()
 def start_sending_data():
-    global sending_data
+    global sending_data, data_process
     sending_data = True  # Reset data transmission if it was stopped
 
     # Start the send_data.py script in a new thread
@@ -194,9 +194,43 @@ def start_sending_data():
     thread.start()
     return jsonify({'message': 'Started sending data for real-time predictions'})
 
+# Endpoint to stop sending data
+@app.route('/stop_sending_data', methods=['GET'])
+@cross_origin()
+def stop_sending_data():
+    global sending_data, data_process
+    sending_data = False
+    
+    # Terminate the subprocess if it's running - use kill instead of terminate for more forceful termination
+    if data_process:
+        try:
+            import signal
+            import os
+            
+            # On Windows, we might need to use taskkill for more reliable termination
+            if os.name == 'nt':  # Windows
+                subprocess.run(['taskkill', '/F', '/T', '/PID', str(data_process.pid)], 
+                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            else:  # Unix/Linux
+                os.killpg(os.getpgid(data_process.pid), signal.SIGTERM)
+            
+            data_process = None
+            print("Successfully terminated data sending process")
+        except Exception as e:
+            print(f"Error terminating process: {str(e)}")
+    
+    return jsonify({'message': 'Stopped sending data for real-time predictions'})
+
 def run_send_data_script():
-    # Replace 'send_data.py' with the actual path to your script
-    subprocess.run(['python', 'send_data.py'])
+    global data_process
+    # Run the send_data.py script as a subprocess with shell=True on Windows
+    import os
+    if os.name == 'nt':  # Windows
+        data_process = subprocess.Popen(['python', 'send_data.py'], 
+                                       creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
+    else:  # Unix/Linux
+        data_process = subprocess.Popen(['python', 'send_data.py'], 
+                                       preexec_fn=os.setsid)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
