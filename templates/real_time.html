@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real-Time Prediction</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .alert-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .attack-row {
+            background-color: #f8d7da;
+            color: #721c24;
+            font-weight: bold;
+        }
+    </style>
     <script>
         // Override the alert function to prevent any alerts
         window.alert = function(message) {
@@ -19,6 +35,7 @@
             <p class="in-heading">Real-Time Prediction</p>
             <p>Click the button below to start sending data for real-time predictions!</p>
             <button id="start-button" class="button in-button">Start Predictions</button>
+            <button id="stop-button" class="button in-button" style="background-color: #e74c3c; margin-left: 10px;" disabled>Stop Predictions</button>
             <div id="result"></div>
             <div id="predictions">
                 <h2>Live Predictions:</h2>
@@ -38,68 +55,17 @@
     </div>
 
     <script>
-            // Function to refresh the prediction table
-            function refreshTable() {
-                fetch('/get_predictions')
-                    .then(response => response.json())
-                    .then(data => {
-                        const tableBody = document.querySelector('table tbody');
-                        tableBody.innerHTML = '';  // Clear existing rows
-                        
-                        // Add all predictions
-                        data.predictions.forEach(pred => {
-                            const row = document.createElement('tr');
-                            
-                            // Add timestamp cell
-                            const timeCell = document.createElement('td');
-                            timeCell.textContent = pred.timestamp;
-                            row.appendChild(timeCell);
-                            
-                            // Add prediction cell
-                            const predCell = document.createElement('td');
-                            predCell.textContent = pred.prediction;
-                            
-                            // Add class for attack rows
-                            if (pred.prediction !== "Normal") {
-                                row.className = "attack-row";
-                            }
-                            
-                            row.appendChild(predCell);
-                            tableBody.appendChild(row);
-                        });
-                    });
-            }
-            
-            // Refresh table every 2 seconds
-            setInterval(refreshTable, 2000);
-
-
-        
-        document.getElementById('start-button').onclick = function() {
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = "<p>Starting data sending...</p>";
-
-            fetch('/start_sending_data')
-                .then(response => response.json())
-                .then(data => {
-                    resultDiv.innerHTML += `<p>${data.message}</p>`;
-                })
-                .catch(error => {
-                    resultDiv.innerHTML += `<p>Error: ${error}</p>`;
-                });
-        };
-
+        // Function to fetch results and update the table
         function fetchResults() {
             fetch('/results')
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.getElementById('predictions-table').getElementsByTagName('tbody')[0];
                     tableBody.innerHTML = ''; // Clear previous results
-
+                    
                     data.forEach(result => {
+                        // Skip any alert messages
                         if (result.alert) {
-                            alert(result.alert); // Show alert
-                            document.getElementById('start-button').disabled = true; // Disable button
                             return;
                         }
 
@@ -108,13 +74,52 @@
                         const predictionCell = newRow.insertCell(1);
                         timestampCell.textContent = result.timestamp;
                         predictionCell.textContent = result.prediction;
+                        
+                        // Highlight rows with attacks
+                        if (result.prediction !== "Normal") {
+                            newRow.className = "attack-row";
+                        }
                     });
                 })
                 .catch(error => console.error('Error fetching results:', error));
         }
-
+        
         // Poll for results every 3 seconds
         setInterval(fetchResults, 3000);
+        
+        document.getElementById('start-button').onclick = function() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = "<p>Starting data sending...</p>";
+
+            fetch('/start_sending_data')
+                .then(response => response.json())
+                .then(data => {
+                    resultDiv.innerHTML = `<p>${data.message}</p>`;
+                    // Enable stop button and disable start button
+                    document.getElementById('stop-button').disabled = false;
+                    document.getElementById('start-button').disabled = true;
+                })
+                .catch(error => {
+                    resultDiv.innerHTML += `<p>Error: ${error}</p>`;
+                });
+        };
+
+        document.getElementById('stop-button').onclick = function() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = "<p>Stopping data sending...</p>";
+
+            fetch('/stop_sending_data')
+                .then(response => response.json())
+                .then(data => {
+                    resultDiv.innerHTML = `<p>${data.message}</p>`;
+                    // Enable start button and disable stop button
+                    document.getElementById('start-button').disabled = false;
+                    document.getElementById('stop-button').disabled = true;
+                })
+                .catch(error => {
+                    resultDiv.innerHTML += `<p>Error: ${error}</p>`;
+                });
+        };
     </script>
 </body>
 </html>
