@@ -4,6 +4,82 @@ from collections import defaultdict
 import numpy as np
 from datetime import datetime
 import os
+import time
+import argparse
+import subprocess
+import sys
+import shutil
+
+# Add argument parser to control script behavior
+parser = argparse.ArgumentParser(description='Network traffic capture and feature extraction')
+parser.add_argument('--capture', action='store_true', help='Capture network traffic before processing')
+parser.add_argument('--interface', type=str, default='WiFi', help='Network interface to capture traffic from')
+parser.add_argument('--duration', type=int, default=60, help='Duration in seconds to capture traffic')
+parser.add_argument('--display_filter', type=str, default='tcp', help='Wireshark display filter')
+parser.add_argument('--input_file', type=str, help='Input PCAPNG file path')
+parser.add_argument('--debug', action='store_true', help='Show debug information')
+parser.add_argument('--list', action='store_true', help='List available interfaces and exit')
+args = parser.parse_args()
+
+# Define paths
+project_dir = os.path.dirname(os.path.abspath(__file__))
+output_dir = os.path.join(project_dir, 'realtime_data')
+if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+
+capture_file_path = os.path.join(output_dir, f'capture_{datetime.now().strftime("%Y%m%d_%H%M%S")}.pcapng')
+csv_output_path = os.path.join(output_dir, 'data.csv')
+
+# Find tshark executable
+tshark_path = None
+
+# Option 1: Use which/where command to find tshark in PATH
+try:
+    if os.name == 'nt':  # Windows
+        result = subprocess.run(['where', 'tshark'], capture_output=True, text=True, check=False)
+        if result.returncode == 0 and result.stdout.strip():
+            tshark_path = result.stdout.strip().split('\n')[0]
+    else:  # Unix/Linux/Mac
+        result = subprocess.run(['which', 'tshark'], capture_output=True, text=True, check=False)
+        if result.returncode == 0:
+            tshark_path = result.stdout.strip()
+except Exception:
+    pass
+
+# Option 2: Use shutil.which
+if not tshark_path:
+    tshark_path = shutil.which('tshark')
+
+# Option 3: Check common installation locations
+if not tshark_path:
+    common_locations = [
+        r'C:\Program Files\Wireshark\tshark.exe',
+        r'C:\Program Files (x86)\Wireshark\tshark.exe',
+        r'C:\Windows\System32\tshark.exe',
+        r'C:\Windows\SysWOW64\tshark.exe',
+    ]
+    for location in common_locations:
+        if os.path.exists(location):
+            tshark_path = location
+            break
+
+if tshark_path:
+    print(f"Found tshark at: {tshark_path}")
+else:
+    print("Warning: Could not find tshark. Packet capture will not be available.")
+
+# List available interfaces if requested
+if args.list:
+    if tshark_path:
+        try:
+            print("Listing available network interfaces:")
+            subprocess.run([tshark_path, '-D'], check=True)
+            sys.exit(0)
+        except Exception as e:
+            print(f"Error listing interfaces: {str(e)}")
+    else:
+        print("Could not find tshark. Cannot list interfaces.")
+    sys.exit(1)
 
 # Dictionary to store flow information
 flow_data = defaultdict(lambda: {
@@ -400,76 +476,205 @@ def get_service_name(sport, dport):
     except (ValueError, TypeError):
         return 'UNKNOWN'
 
-# Load the PCAP file with TCP filter
-print("Starting packet analysis...")
-cap = pyshark.FileCapture(
-    r'C:\Users\ANAND\OneDrive\Desktop\wire\data.pcapng',  # Changed to data.pcapng
-    display_filter='tcp'  # Only capture TCP packets
-)
-
-# Process each packet
-for packet in cap:
-    process_packet(packet)
-
-# Convert flow data to features
-print("Converting flows to features...")
-features_list = []
-for flow_key, flow_info in flow_data.items():
-    features = calculate_features(flow_key, flow_info)
-    if features:
-        features_list.append(features)
-
-# Create DataFrame
-df = pd.DataFrame(features_list)
-
-# Ensure all required columns are present
-required_columns = ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 
-                   'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 
-                   'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 
-                   'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 
-                   'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 
-                   'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 
-                   'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 
-                   'is_sm_ips_ports', 'attack_cat', 'label']
-
-# Add missing columns with default values
-for col in required_columns:
-    if col not in df.columns:
-        df[col] = 0
+def capture_packets():
+    """Capture packets using tshark and save to a pcapng file"""
+    print(f"Starting packet capture on interface '{args.interface}' for {args.duration} seconds...")
     
-# Add ID column
-df['id'] = range(len(df))
-
-# Reorder columns to match required format
-df = df[required_columns]
-
-# Modify the file saving part
-try:
-    # Add timestamp to filename to make it unique
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    if not tshark_path:
+        print("Error: Could not find tshark executable. Please make sure Wireshark is installed.")
+        return None
     
-    # Define the output directory and create it if it doesn't exist
-    output_dir = r'C:\Users\ANAND\OneDrive\Desktop\Intrusion_detection_project\realtime_data'
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    print(f"Using tshark at: {tshark_path}")
     
+    try:
+        # Option 1: Use pyshark for live capture
+        print("Attempting capture with pyshark...")
+        capture = pyshark.LiveCapture(
+            interface=args.interface,
+            output_file=capture_file_path,
+            display_filter=args.display_filter
+        )
+        
+        # Capture for the specified duration
+        print(f"Starting packet sniffing for {args.duration} seconds...")
+        capture.sniff(timeout=args.duration)
+        capture.close()
+        
+        # Wait to ensure file is fully written
+        print("Waiting for file to be fully written...")
+        time.sleep(2)
+        
+        # Verify the file exists and has content
+        if os.path.exists(capture_file_path) and os.path.getsize(capture_file_path) > 0:
+            print(f"Packet capture completed. Saved to {capture_file_path}")
+            return capture_file_path
+        else:
+            print(f"Warning: Capture file not found or empty after pyshark capture.")
+            # Fall through to the tshark method
+        
+    except Exception as e:
+        print(f"Error during packet capture with pyshark: {str(e)}")
+        if hasattr(sys, 'exc_info'):
+            print(str(sys.exc_info()))
+    
+    # Option 2: Use tshark directly via subprocess if pyshark fails
+    try:
+        print("Trying direct capture with tshark...")
+        
+        # Use a new file name to avoid conflicts
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        tshark_capture_path = os.path.join(output_dir, f'tshark_capture_{timestamp}.pcapng')
+        
+        cmd = [
+            tshark_path,
+            '-i', args.interface, 
+            '-w', tshark_capture_path,
+            '-a', f'duration:{args.duration}'
+        ]
+        
+        # Add filter if provided
+        if args.display_filter:
+            cmd.extend(['-f', args.display_filter])
+            
+        print(f"Running command: {' '.join(cmd)}")
+        
+        # Display countdown while capturing
+        process = subprocess.Popen(cmd)
+        for i in range(args.duration, 0, -1):
+            sys.stdout.write(f"\rCapturing... {i} seconds remaining")
+            sys.stdout.flush()
+            time.sleep(1)
+        
+        # Wait for tshark to finish
+        process.wait()
+        
+        # Wait to ensure file is fully written
+        print("\nWaiting for file to be fully written...")
+        time.sleep(2)
+        
+        # Verify the file exists and has content
+        if os.path.exists(tshark_capture_path) and os.path.getsize(tshark_capture_path) > 0:
+            print(f"Packet capture completed with tshark. Saved to {tshark_capture_path}")
+            return tshark_capture_path
+        else:
+            print(f"Error: Capture file not found or empty after tshark capture.")
+            return None
+            
+    except Exception as e2:
+        print(f"Error during packet capture with tshark: {str(e2)}")
+        print(f"Make sure Wireshark/tshark is installed correctly. If using system tshark, try running the script from an administrator command prompt.")
+        if hasattr(sys, 'exc_info'):
+            print(str(sys.exc_info()))
+        return None
+
+# Main execution logic
+if __name__ == "__main__":
+    print("Starting packet analysis...")
+
+    # Determine which file to process
+    input_file = None
+    if args.capture:
+        print("Capture flag is set - attempting to capture packets...")
+        # Capture packets first
+        input_file = capture_packets()
+        if not input_file:
+            print("Packet capture failed. Exiting.")
+            exit(1)
+        
+        # Double check file exists before proceeding
+        if not os.path.exists(input_file):
+            print(f"Error: Capture file {input_file} was not created successfully.")
+            exit(1)
+            
+        print(f"Capture file verified: {input_file} ({os.path.getsize(input_file)} bytes)")
+    elif args.input_file:
+        # Use provided input file
+        input_file = args.input_file
+        print(f"Using specified input file: {input_file}")
+    else:
+        # Set default location
+        realtime_data_dir = os.path.join(project_dir, 'realtime_data')
+        
+        if os.path.exists(realtime_data_dir):
+            # Look for the most recent pcapng file in the realtime_data directory
+            pcap_files = [f for f in os.listdir(realtime_data_dir) if f.endswith('.pcapng')]
+            if pcap_files:
+                # Sort by modification time (most recent first)
+                pcap_files.sort(key=lambda x: os.path.getmtime(os.path.join(realtime_data_dir, x)), reverse=True)
+                input_file = os.path.join(realtime_data_dir, pcap_files[0])
+                print(f"Using most recent capture file: {input_file}")
+            
+        # Fall back to the default location if no files found
+        if not input_file:
+            default_path = r'C:\Users\ANAND\OneDrive\Desktop\wire\data.pcapng'
+            if os.path.exists(default_path):
+                input_file = default_path
+                print(f"Using default capture file: {default_path}")
+            else:
+                print("No capture file found. Please provide an input file with --input_file.")
+                exit(1)
+
+    # Make sure the input file exists
+    if not os.path.exists(input_file):
+        print(f"Error: Input file {input_file} does not exist!")
+        exit(1)
+
+    # Load the PCAP file with the specified filter
+    print(f"Processing capture file: {input_file}")
+    cap = pyshark.FileCapture(
+        input_file,
+        display_filter=args.display_filter
+    )
+
+    # Process each packet
+    for packet in cap:
+        process_packet(packet)
+
+    # Convert flow data to features
+    print("Converting flows to features...")
+    features_list = []
+    for flow_key, flow_info in flow_data.items():
+        features = calculate_features(flow_key, flow_info)
+        if features:
+            features_list.append(features)
+
+    # Create DataFrame
+    df = pd.DataFrame(features_list)
+
+    # Ensure all required columns are present
+    required_columns = ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 
+                       'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 
+                       'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 
+                       'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 
+                       'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 
+                       'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 
+                       'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 
+                       'is_sm_ips_ports', 'attack_cat', 'label']
+
+    # Add missing columns with default values
+    for col in required_columns:
+        if col not in df.columns:
+            df[col] = 0
+        
+    # Add ID column
+    df['id'] = range(len(df))
+
+    # Reorder columns to match required format
+    df = df[required_columns]
+
     # Save the file to real-time data location
-    output_path = os.path.join(output_dir, 'data.csv')
-    
-    # Save to CSV with error handling
-    df.to_csv(output_path, index=False)
-    print(f"Feature extraction complete. Saved to {output_path}")
-except PermissionError:
-    # Try alternative location if permission denied
-    alt_dir = r'C:\Users\ANAND\OneDrive\Desktop\Intrusion_detection_project\realtime_data'
-    if not os.path.exists(alt_dir):
-        os.makedirs(alt_dir)
-    alt_path = os.path.join(alt_dir, f'data_backup_{timestamp}.csv')
-    df.to_csv(alt_path, index=False)
-    print(f"Feature extraction complete. Saved to {alt_path}")
+    try:
+        # Define output path
+        output_path = os.path.join(output_dir, 'data.csv')
+        
+        # Save to CSV with error handling
+        df.to_csv(output_path, index=False)
+        print(f"Feature extraction complete. Saved to {output_path}")
+    except PermissionError:
+        # Try alternative location if permission denied
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        alt_path = os.path.join(output_dir, f'data_backup_{timestamp}.csv')
+        df.to_csv(alt_path, index=False)
+        print(f"Feature extraction complete. Saved to {alt_path}")
 
-# For Excel format, uncomment these lines and install openpyxl if needed:
-# pip install openpyxl
-# excel_path = rf'C:\Users\ANAND\OneDrive\Desktop\wire\extracted_features_{timestamp}.xlsx'
-# df.to_excel(excel_path, index=False, engine='openpyxl')
-# print(f"Also saved as Excel file to {excel_path}")
+    print("Processing complete!")
