@@ -2,14 +2,34 @@ import requests
 import pandas as pd
 import time
 import json
+import sys
 
 # Raw string - backslashes are treated literally
 file_path = r'C:\Users\ANAND\OneDrive\Desktop\Intrusion_detection_project\intrusion\data.xlsx'
 
 # URL of the Flask server
-url = 'http://localhost:8000/receive_data'  # Update if the server URL is different
+url = 'http://localhost:8000'  # Base URL
 
-# Load the dataset
+def check_if_stopped():
+    """Check if the data sending should be stopped"""
+    try:
+        # Make a GET request to check the status
+        response = requests.get(f"{url}/check_status", timeout=2)
+        status = response.json()
+        
+        # If the server explicitly tells us to stop
+        if 'stop_sending' in status and status['stop_sending']:
+            print("Received stop signal from server")
+            return True
+            
+        return False
+    except Exception as e:
+        print(f"Error checking stop status: {str(e)}")
+        # If we can't connect to the server, assume we should stop
+        return True  
+
+# Load the dataset when script starts
+print("Loading dataset...")
 if file_path.endswith('.xlsx'):
     dataset = pd.read_excel(file_path)
 elif file_path.endswith('.csv'):
@@ -19,22 +39,40 @@ elif file_path.endswith('.json'):
 else:
     raise ValueError('Unsupported file format. Only .xlsx, .csv, and .json are supported.')
 
-# Send data row by row with a break between each row
-for index, row in dataset.iterrows():
-    # Convert row to JSON
-    row_json = row.to_json()
-    data = json.loads(row_json)  # Convert string to Python dict
-    
-    # Send a POST request to the Flask server
-    response = requests.post(url, json=data)
-    
-    if response.status_code == 200:
-        print(f'Successfully sent row {index + 1}')
-    else:
-        print(f'Failed to send row {index + 1}. Status code: {response.status_code}')
-    
-    # Pause for a specified amount of time (e.g., 3 seconds) to simulate real-time data streaming
-    time.sleep(30)  # Adjust the sleep time as necessary (e.g., 1 sec, 5 sec)
+print(f"Dataset loaded. Ready to send {len(dataset)} rows.")
+
+# Main function to send data
+def main():
+    # Send data row by row with a break between each row
+    for index, row in dataset.iterrows():
+        # Check if we should stop sending data
+        if check_if_stopped():
+            print("Stopping data transmission as requested")
+            sys.exit(0)
+        
+        # Convert row to JSON
+        row_json = row.to_json()
+        data = json.loads(row_json)  # Convert string to Python dict
+        
+        # Send a POST request to the Flask server
+        try:
+            response = requests.post(f"{url}/receive_data", json=data, timeout=5)
+            
+            if response.status_code == 200:
+                print(f'Successfully sent row {index + 1}')
+            else:
+                print(f'Failed to send row {index + 1}. Status code: {response.status_code}')
+        except Exception as e:
+            print(f"Error sending data: {str(e)}")
+            # If connection fails, wait a bit and continue (don't exit)
+            time.sleep(2)
+            continue
+        
+        # Pause between rows to simulate real-time data streaming
+        time.sleep(30)  # Adjust as needed
+
+if __name__ == "__main__":
+    main()
 
 def send_row_data(row_data):
     try:
