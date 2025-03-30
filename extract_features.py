@@ -28,7 +28,7 @@ if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
 capture_file_path = os.path.join(output_dir, f'capture_{datetime.now().strftime("%Y%m%d_%H%M%S")}.pcapng')
-csv_output_path = os.path.join(output_dir, 'data.csv')
+csv_output_path = os.path.join(output_dir, 'data.xlsx')
 
 # Find tshark executable
 tshark_path = None
@@ -665,16 +665,16 @@ if __name__ == "__main__":
     # Save the file to real-time data location
     try:
         # Define output path
-        output_path = os.path.join(output_dir, 'data.csv')
+        output_path = os.path.join(output_dir, 'data.xlsx')
         
         # Save to CSV with error handling
-        df.to_csv(output_path, index=False)
+        df.to_excel(output_path, index=False)
         print(f"Feature extraction complete. Saved to {output_path}")
     except PermissionError:
         # Try alternative location if permission denied
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        alt_path = os.path.join(output_dir, f'data_backup_{timestamp}.csv')
-        df.to_csv(alt_path, index=False)
+        alt_path = os.path.join(output_dir, f'data_backup_{timestamp}.xlsx')
+        df.to_excel(alt_path, index=False)
         print(f"Feature extraction complete. Saved to {alt_path}")
 
     print("Processing complete!")
