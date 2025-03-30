@@ -45,6 +45,7 @@
                         <tr>
                             <th>Timestamp</th>
                             <th>Predicted Attack</th>
+                            <th>Source IP</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,8 +74,11 @@
                         const newRow = tableBody.insertRow();
                         const timestampCell = newRow.insertCell(0);
                         const predictionCell = newRow.insertCell(1);
+                        const ipCell = newRow.insertCell(2);
+                        
                         timestampCell.textContent = result.timestamp;
                         predictionCell.textContent = result.prediction;
+                        ipCell.textContent = result.source_ip || "N/A";  // Display IP if available, otherwise N/A
                         
                         // Highlight rows with attacks
                         if (result.prediction !== "Normal") {

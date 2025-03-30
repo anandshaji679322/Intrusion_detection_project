@@ -3,11 +3,13 @@ from flask_cors import CORS, cross_origin
 import pandas as pd
 from threading import Thread
 import time
+import pyshark  # Add this import for pcap processing
 from src.pipeline.predict_pipeline import PredictPipeline  # Your existing PredictPipeline class
 import subprocess  # For running the send_data.py script
 from twilio.rest import Client
 import os
 from dotenv import load_dotenv
+from datetime import datetime, timedelta  # For timestamp handling
 
 app = Flask(__name__)
 CORS(app)
@@ -89,13 +91,130 @@ def upload_dataset():
 def real_time_prediction():
     return render_template('real_time.html')  # A separate HTML page for real-time predictions
 
+# Function to extract IP addresses from pcapng files based on timestamp
+def extract_attack_source_ip(timestamp_str):
+    try:
+        # Convert the timestamp string to datetime
+        timestamp = datetime.strptime(timestamp_str, "%Y-%m-%d %H:%M:%S")
+        
+        # Define time window (look at packets within 10 seconds of the timestamp)
+        time_window = 10
+        start_time = timestamp - timedelta(seconds=time_window)
+        end_time = timestamp + timedelta(seconds=time_window)
+        
+        # Find the relevant pcapng file (most recent file created before the timestamp)
+        import os
+        import shutil
+        
+        # Find tshark executable
+        tshark_path = None
+        if os.name == 'nt':  # Windows
+            common_locations = [
+                r'C:\Program Files\Wireshark\tshark.exe',
+                r'C:\Program Files (x86)\Wireshark\tshark.exe',
+            ]
+            for location in common_locations:
+                if os.path.exists(location):
+                    tshark_path = location
+                    break
+            if not tshark_path:
+                tshark_path = shutil.which('tshark')
+        else:  # Unix/Linux
+            tshark_path = shutil.which('tshark')
+            
+        if not tshark_path:
+            print("Could not find tshark. Cannot extract IP addresses.")
+            return "IP extraction failed (tshark not found)"
+        
+        realtime_data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'realtime_data')
+        pcap_files = [f for f in os.listdir(realtime_data_dir) if f.endswith('.pcapng')]
+        
+        if not pcap_files:
+            return "Unknown IP (no pcap files found)"
+        
+        # Sort by modification time (most recent first)
+        pcap_files.sort(key=lambda x: os.path.getmtime(os.path.join(realtime_data_dir, x)), reverse=True)
+        
+        # Get the most recent pcap file
+        pcap_file = os.path.join(realtime_data_dir, pcap_files[0])
+        
+        print(f"Analyzing pcap file: {pcap_file} to find attack source")
+        
+        # Format timestamp for tshark - use epoch seconds which are more reliable
+        start_epoch = int(start_time.timestamp())
+        end_epoch = int(end_time.timestamp())
+        
+        # First try: Use tshark with time constraints
+        cmd = [
+            tshark_path,
+            '-r', pcap_file,
+            '-T', 'fields',
+            '-e', 'ip.src',
+            '-Y', f'frame.time_epoch >= {start_epoch} and frame.time_epoch <= {end_epoch}'
+        ]
+        
+        print(f"Running tshark command with time filter: {' '.join(cmd)}")
+        
+        # Run tshark process
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        ips = [ip.strip() for ip in result.stdout.split('\n') if ip.strip()]
+        
+        # If no results with time filter, try without time constraints
+        if not ips or result.returncode != 0:
+            print("No results with time filter, trying without time constraints")
+            # Second try: Just get all source IPs from the file
+            cmd = [
+                tshark_path,
+                '-r', pcap_file,
+                '-T', 'fields',
+                '-e', 'ip.src'
+            ]
+            result = subprocess.run(cmd, capture_output=True, text=True)
+            if result.returncode != 0:
+                print(f"Error running tshark without filter: {result.stderr}")
+                return "IP extraction failed (tshark error)"
+            
+            ips = [ip.strip() for ip in result.stdout.split('\n') if ip.strip()]
+        
+        # Count occurrences of each IP
+        ip_counts = {}
+        for ip in ips:
+            if ip in ip_counts:
+                ip_counts[ip] += 1
+            else:
+                ip_counts[ip] = 1
+        
+        print(f"Found {len(ips)} packets with IPs, {len(ip_counts)} unique IPs")
+        
+        # Return most frequent IP (or IPs if there's a tie)
+        if not ip_counts:
+            return "Unknown IP (no matching packets)"
+            
+        # Find most frequent IP
+        max_count = max(ip_counts.values())
+        most_frequent_ips = [ip for ip, count in ip_counts.items() if count == max_count]
+        
+        if len(most_frequent_ips) == 1:
+            return most_frequent_ips[0]
+        else:
+            return ", ".join(most_frequent_ips[:3]) + f" (and {len(most_frequent_ips)-3} more)" if len(most_frequent_ips) > 3 else ", ".join(most_frequent_ips)
+            
+    except Exception as e:
+        print(f"Error extracting IP address: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return "IP extraction failed"
+
 # Function to send WhatsApp notification
 def send_whatsapp_alert(attack_type, timestamp):
     try:
         client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
         
-        # Create message content
-        message_body = f"🚨 SECURITY ALERT: {attack_type} attack detected at {timestamp}! Immediate action required."
+        # Create message content - if attack_type is already a full message, use it directly
+        if "Attack detected" in attack_type:
+            message_body = f"🚨 SECURITY ALERT: {attack_type}! Immediate action required."
+        else:
+            message_body = f"🚨 SECURITY ALERT: {attack_type} attack detected at {timestamp}! Immediate action required."
         
         # Send WhatsApp message
         message = client.messages.create(
@@ -151,16 +270,23 @@ def receive_data():
     predicted_attack = predict_pipeline.predict(single_row_df)
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
     
+    # Create result
     result = {
         'timestamp': timestamp,
         'prediction': predicted_attack[0]
     }
-    predicted_results.append(result)
     
-    # Send WhatsApp notification for attacks
+    # If an attack is detected, extract IP address
     if result['prediction'] != "Normal":
-        print(f"Attack detected: {result['prediction']} at {timestamp}")
-        send_whatsapp_alert(result['prediction'], timestamp)
+        # Get source IP address
+        result['source_ip'] = extract_attack_source_ip(timestamp)
+        print(f"Attack detected: {result['prediction']} from IP {result['source_ip']} at {timestamp}")
+        
+        # Format for WhatsApp message
+        attack_message = f"Attack detected: {result['prediction']} from IP {result['source_ip']} at {timestamp}"
+        send_whatsapp_alert(attack_message, timestamp)
+    
+    predicted_results.append(result)
     
     # IMPORTANT: Always return success status, never error
     return jsonify({"status": "success"})
