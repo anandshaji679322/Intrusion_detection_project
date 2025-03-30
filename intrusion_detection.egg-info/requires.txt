@@ -8,3 +8,4 @@ dill
 flask
 flask-cors
 openpyxl
+pyshark
