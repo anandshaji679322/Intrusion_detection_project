@@ -16,6 +16,7 @@ CORS(app)
 predicted_results = []
 sending_data = True  # Flag to control data transmission
 data_process = None  # Global variable to track the subprocess
+packet_capture_process = None  # New variable to track packet capture subprocess
 
 # Twilio WhatsApp configuration
 TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")  # Replace with your Twilio SID
@@ -189,16 +190,129 @@ def start_sending_data():
     global sending_data, data_process
     sending_data = True  # Reset data transmission if it was stopped
 
+    # First run packet capture and feature extraction
+    run_packet_capture_and_processing()
+
     # Start the send_data.py script in a new thread
     thread = Thread(target=run_send_data_script)
     thread.start()
-    return jsonify({'message': 'Started sending data for real-time predictions'})
+    return jsonify({'message': 'Started capturing packets and sending data for real-time predictions'})
+
+# Function to run packet capture and feature extraction
+def run_packet_capture_and_processing():
+    global packet_capture_process
+    # Run the extract_features.py script with --capture flag
+    import os
+    
+    try:
+        print("Starting packet capture and feature extraction...")
+        # First, run packet capture separately with a longer timeout
+        if os.name == 'nt':  # Windows
+            # Run capture with --capture flag
+            print("Step 1: Capturing packets (this may take about 60 seconds)...")
+            result = subprocess.run(['python', 'extract_features.py', '--capture'], 
+                          check=False, timeout=120)  # Increased timeout to 120 seconds
+            
+            # Check for success
+            if result.returncode != 0:
+                print(f"Warning: Packet capture may have encountered issues, return code: {result.returncode}")
+            
+            # After packet capture, check if the Excel file exists
+            realtime_data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'realtime_data')
+            excel_file = os.path.join(realtime_data_dir, 'data.xlsx')
+            
+            if not os.path.exists(excel_file):
+                print("Excel file not found after packet capture. Manually running feature extraction...")
+                # Find the most recent pcapng file
+                pcap_files = [f for f in os.listdir(realtime_data_dir) if f.endswith('.pcapng')]
+                if pcap_files:
+                    # Sort by modification time (most recent first)
+                    pcap_files.sort(key=lambda x: os.path.getmtime(os.path.join(realtime_data_dir, x)), reverse=True)
+                    most_recent_pcap = os.path.join(realtime_data_dir, pcap_files[0])
+                    print(f"Found pcap file: {most_recent_pcap}")
+                    
+                    # Run feature extraction on the most recent pcap file
+                    print("Step 2: Extracting features from the captured packets...")
+                    subprocess.run(['python', 'extract_features.py', '--input_file', most_recent_pcap], 
+                                 check=False, timeout=60)
+                    
+                    # Wait for file processing
+                    print("Waiting for feature extraction to complete...")
+                    time.sleep(5)
+                else:
+                    print("No pcap files found in realtime_data directory.")
+            
+            # Final check if the Excel file exists
+            if os.path.exists(excel_file):
+                print(f"Feature extraction complete. Excel file created: {excel_file}")
+            else:
+                print("Warning: Excel file still not found after feature extraction attempt.")
+                
+            print("Packet capture and feature extraction steps completed")
+        else:  # Unix/Linux - similar process but with Unix-specific considerations
+            # Run capture with --capture flag
+            result = subprocess.run(['python', 'extract_features.py', '--capture'], 
+                          check=False, timeout=120)
+            
+            # Similar post-processing as above
+            realtime_data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'realtime_data')
+            excel_file = os.path.join(realtime_data_dir, 'data.xlsx')
+            
+            if not os.path.exists(excel_file):
+                print("Excel file not found after packet capture. Manually running feature extraction...")
+                pcap_files = [f for f in os.listdir(realtime_data_dir) if f.endswith('.pcapng')]
+                if pcap_files:
+                    pcap_files.sort(key=lambda x: os.path.getmtime(os.path.join(realtime_data_dir, x)), reverse=True)
+                    most_recent_pcap = os.path.join(realtime_data_dir, pcap_files[0])
+                    print(f"Found pcap file: {most_recent_pcap}")
+                    
+                    subprocess.run(['python', 'extract_features.py', '--input_file', most_recent_pcap], 
+                                 check=False, timeout=60)
+                    
+                    time.sleep(5)
+                else:
+                    print("No pcap files found in realtime_data directory.")
+                    
+            if os.path.exists(excel_file):
+                print(f"Feature extraction complete. Excel file created: {excel_file}")
+            else:
+                print("Warning: Excel file still not found after feature extraction attempt.")
+                
+            print("Packet capture and feature extraction steps completed")
+    except subprocess.TimeoutExpired:
+        print("One of the steps took too long, but continuing anyway")
+        # Check if we can find a pcap file and run manual extraction
+        try:
+            realtime_data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'realtime_data')
+            pcap_files = [f for f in os.listdir(realtime_data_dir) if f.endswith('.pcapng')]
+            if pcap_files:
+                pcap_files.sort(key=lambda x: os.path.getmtime(os.path.join(realtime_data_dir, x)), reverse=True)
+                most_recent_pcap = os.path.join(realtime_data_dir, pcap_files[0])
+                print(f"Found pcap file after timeout: {most_recent_pcap}")
+                subprocess.run(['python', 'extract_features.py', '--input_file', most_recent_pcap], 
+                               check=False, timeout=60)
+        except Exception as e:
+            print(f"Error during recovery attempt: {str(e)}")
+    except Exception as e:
+        print(f"Error during packet capture: {str(e)}")
+        # Continue anyway, as we might have a previous capture file to use
+        try:
+            realtime_data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'realtime_data')
+            pcap_files = [f for f in os.listdir(realtime_data_dir) if f.endswith('.pcapng')]
+            if pcap_files:
+                pcap_files.sort(key=lambda x: os.path.getmtime(os.path.join(realtime_data_dir, x)), reverse=True)
+                most_recent_pcap = os.path.join(realtime_data_dir, pcap_files[0])
+                print(f"Found pcap file after error: {most_recent_pcap}")
+                subprocess.run(['python', 'extract_features.py', '--input_file', most_recent_pcap], 
+                               check=False, timeout=60)
+        except Exception as e:
+            print(f"Error during recovery attempt: {str(e)}")
 
 # Endpoint to stop sending data
 @app.route('/stop_sending_data', methods=['GET'])
 @cross_origin()
 def stop_sending_data():
-    global sending_data, data_process
+    global sending_data, data_process, packet_capture_process
     sending_data = False
     
     # Terminate the subprocess if it's running - use kill instead of terminate for more forceful termination
@@ -219,18 +333,67 @@ def stop_sending_data():
         except Exception as e:
             print(f"Error terminating process: {str(e)}")
     
+    # Also terminate packet capture process if it's still running
+    if packet_capture_process and packet_capture_process.poll() is None:
+        try:
+            if os.name == 'nt':  # Windows
+                subprocess.run(['taskkill', '/F', '/T', '/PID', str(packet_capture_process.pid)],
+                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            else:  # Unix/Linux
+                os.killpg(os.getpgid(packet_capture_process.pid), signal.SIGTERM)
+            
+            packet_capture_process = None
+            print("Successfully terminated packet capture process")
+        except Exception as e:
+            print(f"Error terminating packet capture process: {str(e)}")
+    
     return jsonify({'message': 'Stopped sending data for real-time predictions'})
 
 def run_send_data_script():
     global data_process
-    # Run the send_data.py script as a subprocess with shell=True on Windows
+    # Import os at the beginning of the function
     import os
+    
+    # Make sure we wait a few seconds for the feature extraction process to complete
+    time.sleep(5)
+    
+    # Check if the Excel file exists before running send_data.py
+    realtime_data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'realtime_data')
+    excel_file = os.path.join(realtime_data_dir, 'data.xlsx')
+    
+    if not os.path.exists(excel_file):
+        print(f"Warning: Excel file {excel_file} does not exist before running send_data.py")
+        # Look for any Excel file in the directory
+        excel_files = [f for f in os.listdir(realtime_data_dir) if f.endswith('.xlsx')]
+        if not excel_files:
+            print("No Excel files found in realtime_data directory. Looking for pcapng files to process...")
+            # Try to process the most recent pcapng file
+            pcap_files = [f for f in os.listdir(realtime_data_dir) if f.endswith('.pcapng')]
+            if pcap_files:
+                pcap_files.sort(key=lambda x: os.path.getmtime(os.path.join(realtime_data_dir, x)), reverse=True)
+                most_recent_pcap = os.path.join(realtime_data_dir, pcap_files[0])
+                print(f"Found pcap file: {most_recent_pcap}, attempting to extract features...")
+                try:
+                    # Run feature extraction on the most recent pcap file
+                    subprocess.run(['python', 'extract_features.py', '--input_file', most_recent_pcap], 
+                                 check=False, timeout=60)
+                    # Wait for processing to complete
+                    time.sleep(5)
+                except Exception as e:
+                    print(f"Error extracting features: {str(e)}")
+            else:
+                print("No pcapng files found either. send_data.py may fail to find input data.")
+    
+    # Run the send_data.py script as a subprocess with shell=True on Windows
+    print("Starting send_data.py to process extracted features...")
+    
     if os.name == 'nt':  # Windows
         data_process = subprocess.Popen(['python', 'send_data.py'], 
                                        creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
     else:  # Unix/Linux
         data_process = subprocess.Popen(['python', 'send_data.py'], 
                                        preexec_fn=os.setsid)
+    print("send_data.py started")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
