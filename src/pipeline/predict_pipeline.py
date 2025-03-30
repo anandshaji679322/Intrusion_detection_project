@@ -6,11 +6,13 @@ from src.logger import logging
 from src.utils import load_object
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
+import joblib
 
 class PredictPipeline:
     def __init__(self):
         # Path to the model
         self.model_path = os.path.join('artifacts', 'best_model.pkl')
+        self.normalizer = os.path.join('artifacts', 'normalizer.pkl')
 
         try:
             # Check if the model file exists
@@ -58,23 +60,28 @@ class PredictPipeline:
             cat_col = cat_col[1:]
             data_cat = data[cat_col].copy()
             data_cat = pd.get_dummies(data_cat,columns=cat_col)
+            expected_columns= ['proto_tcp', 'proto_udp', 'service_dhcp', 'service_dns', 'service_ftp',
+       'service_ftp-data', 'service_http', 'service_irc', 'service_pop3',
+       'service_radius', 'service_smtp', 'service_snmp', 'service_ssh',
+       'service_ssl', 'state_CON', 'state_FIN', 'state_INT', 'state_REQ',
+       'state_RST']
+            data_cat = data_cat.reindex(columns=expected_columns).fillna(False).astype(bool)
             data = pd.concat([data, data_cat],axis=1)
             data.drop(columns=cat_col,inplace=True)
-            # Normalize numerical columns
-            
-            minmax_scale = MinMaxScaler(feature_range=(0, 1))
+           
             num_col = list(data.select_dtypes(include='number').columns)
             num_col.remove('id')
             num_col.remove('label')
-            def normalization(df, col):
-                for i in col:
-                    arr = df[i]
-                    arr = np.array(arr)
-                    df[i] = minmax_scale.fit_transform(arr.reshape(len(arr), 1))
-                return df
+            preprocessor=joblib.load(self.normalizer)
+            try:
+                transformed_data = preprocessor.transform(data)
+            except AttributeError:
+                    # Fallback for scikit-learn <1.4.0
+                transformed_data = preprocessor._transform(data)
+            transformed_columns = num_col + list(data.columns.difference(num_col))
 
-            multi_data = normalization(data.copy(), num_col)
-            multi_label = pd.DataFrame(multi_data.attack_cat)
+            data = pd.DataFrame(transformed_data, columns=transformed_columns)
+            multi_data = data.copy()
 
 
 
@@ -92,7 +99,79 @@ class PredictPipeline:
         except Exception as e:
             logging.error('Error occurred during preprocessing')
             raise CustomException(e, sys)
+        
 
+    def realtime_preprocess(self, data):
+            try:
+                # Replace missing values and drop null entries
+                data['service'].replace('-', np.nan, inplace=True)
+                data.dropna(inplace=True)
+
+                # Columns classification
+                nominal_names = ['srcip', 'dstip', 'proto', 'state', 'service', 'attack_cat']
+                integer_names = ['sport', 'dsport', 'sbytes', 'dbytes', 'sttl', 'dttl', 'sloss', 'dloss', 'Spkts', 'Dpkts', 'swin', 'dwin', 'stcpb', 'dtcpb', 'smeansz', 'dmeansz', 'trans_depth', 'res_bdy_len', 'ct_state_ttl', 'ct_flw_http_mthd', 'ct_ftp_cmd', 'ct_srv_src', 'ct_srv_dst', 'ct_dst_ltm', 'ct_src_ ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm']
+                binary_names = ['is_sm_ips_ports', 'is_ftp_login', 'Label']
+                float_names = ['dur', 'Sload', 'Dload', 'Sjit', 'Djit', 'Sintpkt', 'Dintpkt', 'tcprtt', 'synack', 'ackdat']
+                cols = data.columns
+
+                # Select only available columns
+                nominal_names = cols.intersection(nominal_names)
+                integer_names = cols.intersection(integer_names)
+                binary_names = cols.intersection(binary_names)
+                float_names = cols.intersection(float_names)
+
+                # Convert integer, binary, and float columns to numeric
+                for c in integer_names:
+                    data[c] = pd.to_numeric(data[c])
+                for c in binary_names:
+                    data[c] = pd.to_numeric(data[c])
+                for c in float_names:
+                    data[c] = pd.to_numeric(data[c])
+                num_col = data.select_dtypes(include='number').columns
+                # selecting categorical data attributes
+                cat_col = data.columns.difference(num_col)
+                cat_col = cat_col[1:]
+                data_cat = data[cat_col].copy()
+                data_cat = pd.get_dummies(data_cat,columns=cat_col)
+                expected_columns= ['proto_tcp', 'proto_udp', 'service_dhcp', 'service_dns', 'service_ftp',
+       'service_ftp-data', 'service_http', 'service_irc', 'service_pop3',
+       'service_radius', 'service_smtp', 'service_snmp', 'service_ssh',
+       'service_ssl', 'state_CON', 'state_FIN', 'state_INT', 'state_REQ',
+       'state_RST']
+                data_cat = data_cat.reindex(columns=expected_columns).fillna(False).astype(bool)
+                data = pd.concat([data, data_cat],axis=1)
+                data.drop(columns=cat_col,inplace=True)
+                # Normalize numerical columns
+                num_col = list(data.select_dtypes(include='number').columns)
+                num_col.remove('id')
+                num_col.remove('label')
+                preprocessor=joblib.load(self.normalizer)
+                try:
+                    transformed_data = preprocessor.transform(data)
+                except AttributeError:
+                    # Fallback for scikit-learn <1.4.0
+                    transformed_data = preprocessor._transform(data)
+                transformed_columns = num_col + list(data.columns.difference(num_col))
+
+                data = pd.DataFrame(transformed_data, columns=transformed_columns)
+                multi_data = data.copy()
+
+
+                required_columns =  ['dur', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl',
+        'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit',
+        'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean',
+        'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src',
+        'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm',
+        'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd',
+        'ct_src_ltm', 'ct_srv_dst']
+                available_columns = [col for col in required_columns if col in multi_data.columns]
+
+                return multi_data[available_columns] 
+
+            except Exception as e:
+                logging.error('Error occurred during preprocessing')
+                raise CustomException(e, sys)
+            
     def predict(self, dataset):
         try:
             # Ensure that the input dataset is a pandas DataFrame
@@ -102,8 +181,10 @@ class PredictPipeline:
             # Log input dataset details
             logging.info(f"Input dataset columns: {dataset.columns.tolist()}")
 
-            # Preprocess the input data
-            preprocessed_data = self.preprocess(dataset)
+            if len(dataset)>1:
+                preprocessed_data = self.preprocess(dataset)
+            else:
+                preprocessed_data = self.realtime_preprocess(dataset)
 
             # Drop the 'id' column if it exists
             if 'id' in preprocessed_data.columns:
