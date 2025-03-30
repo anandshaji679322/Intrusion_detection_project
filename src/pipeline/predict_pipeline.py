@@ -8,6 +8,7 @@ from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 import joblib
 
+
 class PredictPipeline:
     def __init__(self):
         # Path to the model
@@ -82,6 +83,23 @@ class PredictPipeline:
 
             data = pd.DataFrame(transformed_data, columns=transformed_columns)
             multi_data = data.copy()
+            data = pd.concat([data, data_cat],axis=1)
+            data.drop(columns=cat_col,inplace=True)
+            # Normalize numerical columns
+            
+            minmax_scale = MinMaxScaler(feature_range=(0, 1))
+            num_col = list(data.select_dtypes(include='number').columns)
+            num_col.remove('id')
+            num_col.remove('label')
+            def normalization(df, col):
+                for i in col:
+                    arr = df[i]
+                    arr = np.array(arr)
+                    df[i] = minmax_scale.fit_transform(arr.reshape(len(arr), 1))
+                return df
+
+            multi_data = normalization(data.copy(), num_col)
+            multi_label = pd.DataFrame(multi_data.attack_cat)
 
 
 
@@ -172,6 +190,7 @@ class PredictPipeline:
                 logging.error('Error occurred during preprocessing')
                 raise CustomException(e, sys)
             
+
     def predict(self, dataset):
         try:
             # Ensure that the input dataset is a pandas DataFrame
@@ -185,6 +204,9 @@ class PredictPipeline:
                 preprocessed_data = self.preprocess(dataset)
             else:
                 preprocessed_data = self.realtime_preprocess(dataset)
+
+            # Preprocess the input data
+            preprocessed_data = self.preprocess(dataset)
 
             # Drop the 'id' column if it exists
             if 'id' in preprocessed_data.columns:
