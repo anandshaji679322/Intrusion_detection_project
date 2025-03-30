@@ -214,7 +214,7 @@ def send_whatsapp_alert(attack_type, timestamp):
         if "Attack detected" in attack_type:
             message_body = f"🚨 SECURITY ALERT: {attack_type}! Immediate action required."
         else:
-            message_body = f"🚨 SECURITY ALERT: {attack_type} attack detected at {timestamp}! Immediate action required."
+        message_body = f"🚨 SECURITY ALERT: {attack_type} attack detected at {timestamp}! Immediate action required."
         
         # Send WhatsApp message
         message = client.messages.create(
