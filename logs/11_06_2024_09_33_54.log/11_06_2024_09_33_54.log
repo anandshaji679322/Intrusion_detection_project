@@ -1,3 +1,0 @@
-[ 2024-11-06 09:33:54,906 ] 97 werkzeug - WARNING -  * Debugger is active!
-[ 2024-11-06 09:33:54,928 ] 97 werkzeug - INFO -  * Debugger PIN: 173-526-570
-[ 2024-11-06 09:33:57,042 ] 97 werkzeug - INFO -  * Detected change in 'D:\\files\\intrusion\\send_data.py', reloading

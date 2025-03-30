@@ -1,7 +1,0 @@
-[ 2024-11-05 14:57:53,730 ] 97 werkzeug - WARNING -  * Debugger is active!
-[ 2024-11-05 14:57:53,733 ] 97 werkzeug - INFO -  * Debugger PIN: 136-839-380
-[ 2024-11-05 14:57:54,595 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:57:54] "GET /upload HTTP/1.1" 200 -
-[ 2024-11-05 14:57:54,598 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:57:54] "GET /upload HTTP/1.1" 200 -
-[ 2024-11-05 14:57:54,697 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:57:54] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
-[ 2024-11-05 14:58:00,840 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 14:58:00] "[33mPOST /upload_dataset HTTP/1.1[0m" 404 -
-[ 2024-11-05 14:58:18,806 ] 97 werkzeug - INFO -  * Detected change in 'C:\\Users\\ANAND\\Downloads\\Intrusion_detection_project\\app.py', reloading

@@ -1,8 +1,0 @@
-[ 2024-11-05 12:19:48,260 ] 97 werkzeug - WARNING -  * Debugger is active!
-[ 2024-11-05 12:19:48,263 ] 97 werkzeug - INFO -  * Debugger PIN: 136-839-380
-[ 2024-11-05 12:19:50,484 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 12:19:50] "GET / HTTP/1.1" 200 -
-[ 2024-11-05 12:19:50,567 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 12:19:50] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
-[ 2024-11-05 12:19:51,785 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 12:19:51] "[33mGET /templates/login.html HTTP/1.1[0m" 404 -
-[ 2024-11-05 12:19:55,851 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 12:19:55] "GET / HTTP/1.1" 200 -
-[ 2024-11-05 12:19:55,870 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 12:19:55] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
-[ 2024-11-05 12:19:58,555 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 12:19:58] "[33mGET /templates/login.html HTTP/1.1[0m" 404 -

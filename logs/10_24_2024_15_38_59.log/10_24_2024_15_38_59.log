@@ -1,8 +1,0 @@
-[ 2024-10-24 15:38:59,732 ] 97 werkzeug - WARNING -  * Debugger is active!
-[ 2024-10-24 15:38:59,765 ] 97 werkzeug - INFO -  * Debugger PIN: 173-526-570
-[ 2024-10-24 15:39:12,270 ] 97 werkzeug - INFO - 127.0.0.1 - - [24/Oct/2024 15:39:12] "GET / HTTP/1.1" 200 -
-[ 2024-10-24 15:39:12,351 ] 97 werkzeug - INFO - 127.0.0.1 - - [24/Oct/2024 15:39:12] "[33mGET /styles.css HTTP/1.1[0m" 404 -
-[ 2024-10-24 15:39:12,528 ] 97 werkzeug - INFO - 127.0.0.1 - - [24/Oct/2024 15:39:12] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
-[ 2024-10-24 15:39:32,143 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports']
-[ 2024-10-24 15:39:35,569 ] 97 werkzeug - INFO - 127.0.0.1 - - [24/Oct/2024 15:39:35] "POST /predict HTTP/1.1" 200 -
-[ 2024-10-24 15:39:35,624 ] 97 werkzeug - INFO - 127.0.0.1 - - [24/Oct/2024 15:39:35] "[33mGET /styles.css HTTP/1.1[0m" 404 -

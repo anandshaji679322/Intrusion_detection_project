@@ -1,6 +1,0 @@
-[ 2024-11-05 12:22:21,284 ] 97 werkzeug - WARNING -  * Debugger is active!
-[ 2024-11-05 12:22:21,288 ] 97 werkzeug - INFO -  * Debugger PIN: 136-839-380
-[ 2024-11-05 12:22:25,706 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 12:22:25] "GET / HTTP/1.1" 200 -
-[ 2024-11-05 12:22:25,943 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 12:22:25] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
-[ 2024-11-05 12:22:29,394 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 12:22:29] "[33mGET /login.html HTTP/1.1[0m" 404 -
-[ 2024-11-05 12:23:07,757 ] 97 werkzeug - INFO -  * Detected change in 'c:\\users\\anand\\downloads\\intrusion_detection_project\\app.py', reloading

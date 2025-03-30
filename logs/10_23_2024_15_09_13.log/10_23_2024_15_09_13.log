@@ -1,9 +1,0 @@
-[ 2024-10-23 15:09:31,313 ] 35 root - INFO - Entered the data ingestion method or component
-[ 2024-10-23 15:09:32,112 ] 39 root - INFO - Read the dataset as dataframe
-[ 2024-10-23 15:09:35,640 ] 46 root - INFO - Ingestion of the data is completed
-[ 2024-10-23 15:09:36,343 ] 89 root - INFO - Starting dataset transformation.
-[ 2024-10-23 15:09:37,277 ] 109 root - ERROR - Error occurred in data transformation process.
-Traceback (most recent call last):
-  File "d:\files\project\src\components\data_transformation.py", line 94, in initiate_data_transformation
-    X = transformed_data.drop(columns=['label'], axis=1)
-AttributeError: 'tuple' object has no attribute 'drop'

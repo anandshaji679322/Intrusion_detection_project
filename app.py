@@ -5,12 +5,23 @@ from threading import Thread
 import time
 from src.pipeline.predict_pipeline import PredictPipeline  # Your existing PredictPipeline class
 import subprocess  # For running the send_data.py script
+from twilio.rest import Client
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 CORS(app)
 
 # Global variable to store live results for the dashboard
 predicted_results = []
+sending_data = True  # Flag to control data transmission
+data_process = None  # Global variable to track the subprocess
+
+# Twilio WhatsApp configuration
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")  # Replace with your Twilio SID
+TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")     # Replace with your Twilio token
+TWILIO_WHATSAPP_NUMBER = os.getenv("TWILIO_WHATSAPP_NUMBER")  # Twilio's WhatsApp sandbox number
+RECIPIENT_WHATSAPP_NUMBER = os.getenv("RECIPIENT_WHATSAPP_NUMBER") # Your WhatsApp number (with country code)
 
 @app.route('/')
 @cross_origin()
@@ -77,9 +88,30 @@ def upload_dataset():
 def real_time_prediction():
     return render_template('real_time.html')  # A separate HTML page for real-time predictions
 
+# Function to send WhatsApp notification
+def send_whatsapp_alert(attack_type, timestamp):
+    try:
+        client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+        
+        # Create message content
+        message_body = f"🚨 SECURITY ALERT: {attack_type} attack detected at {timestamp}! Immediate action required."
+        
+        # Send WhatsApp message
+        message = client.messages.create(
+            body=message_body,
+            from_=TWILIO_WHATSAPP_NUMBER,
+            to=RECIPIENT_WHATSAPP_NUMBER
+        )
+        
+        print(f"WhatsApp notification sent! SID: {message.sid}")
+        return True
+    except Exception as e:
+        print(f"Failed to send WhatsApp notification: {str(e)}")
+        return False
+
 # Function to process incoming data and make predictions
 def process_real_time_data(single_row):
-    global predicted_results
+    global predicted_results, sending_data
     predict_pipeline = PredictPipeline()
     
     # Convert the incoming single-row dictionary to DataFrame
@@ -90,46 +122,115 @@ def process_real_time_data(single_row):
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
     
     # Store the prediction result for the live dashboard
-    predicted_results.append({
+    result = {
         'timestamp': timestamp,
         'prediction': predicted_attack[0]
-    })
+    }
+    predicted_results.append(result)
+
+    # If an attack is detected, send WhatsApp notification
+    if result['prediction'] != "Normal":
+        print(f"⚠️ Attack Detected: {result['prediction']} at {timestamp}")
+        
+        # Send WhatsApp notification about the attack
+        send_whatsapp_alert(result['prediction'], timestamp)
+        
+        # You can choose to still stop data transmission or continue
+        sending_data = False
 
 # API endpoint to receive real-time data and make predictions
 @app.route('/receive_data', methods=['POST'])
-@cross_origin()
 def receive_data():
+    global predicted_results
     data = request.get_json()
     
-    # Check if the data is valid
-    if not data:
-        return jsonify({'error': 'No data received'}), 400
+    # Process data
+    predict_pipeline = PredictPipeline()
+    single_row_df = pd.DataFrame([data])
+    predicted_attack = predict_pipeline.predict(single_row_df)
+    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+    
+    result = {
+        'timestamp': timestamp,
+        'prediction': predicted_attack[0]
+    }
+    predicted_results.append(result)
+    
+    # Send WhatsApp notification for attacks
+    if result['prediction'] != "Normal":
+        print(f"Attack detected: {result['prediction']} at {timestamp}")
+        send_whatsapp_alert(result['prediction'], timestamp)
+    
+    # IMPORTANT: Always return success status, never error
+    return jsonify({"status": "success"})
 
-    # Process the incoming data in a background thread
-    thread = Thread(target=process_real_time_data, args=(data,))
-    thread.start()
-
-    return jsonify({'message': 'Data received and prediction in progress'}), 200
+# Add a new endpoint that will be used instead of any alert-triggering endpoint
+@app.route('/check_status', methods=['GET'])
+def check_status():
+    global sending_data
+    # Always return "no attack" to prevent alerts, but include the stop flag
+    return jsonify({
+        "attack_detected": False,
+        "stop_sending": not sending_data  # If sending_data is False, we want to stop
+    })
 
 # Endpoint to fetch live prediction results for dashboard updates
 @app.route('/results', methods=['GET'])
 @cross_origin()
 def get_results():
     global predicted_results
+    # Return only the prediction results without any alert messages
     return jsonify(predicted_results)
 
 # Endpoint to start sending data
 @app.route('/start_sending_data', methods=['GET'])
 @cross_origin()
 def start_sending_data():
+    global sending_data, data_process
+    sending_data = True  # Reset data transmission if it was stopped
+
     # Start the send_data.py script in a new thread
     thread = Thread(target=run_send_data_script)
     thread.start()
     return jsonify({'message': 'Started sending data for real-time predictions'})
 
+# Endpoint to stop sending data
+@app.route('/stop_sending_data', methods=['GET'])
+@cross_origin()
+def stop_sending_data():
+    global sending_data, data_process
+    sending_data = False
+    
+    # Terminate the subprocess if it's running - use kill instead of terminate for more forceful termination
+    if data_process:
+        try:
+            import signal
+            import os
+            
+            # On Windows, we might need to use taskkill for more reliable termination
+            if os.name == 'nt':  # Windows
+                subprocess.run(['taskkill', '/F', '/T', '/PID', str(data_process.pid)], 
+                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            else:  # Unix/Linux
+                os.killpg(os.getpgid(data_process.pid), signal.SIGTERM)
+            
+            data_process = None
+            print("Successfully terminated data sending process")
+        except Exception as e:
+            print(f"Error terminating process: {str(e)}")
+    
+    return jsonify({'message': 'Stopped sending data for real-time predictions'})
+
 def run_send_data_script():
-    # Replace 'send_data.py' with the actual path to your script
-    subprocess.run(['python', 'send_data.py'])
+    global data_process
+    # Run the send_data.py script as a subprocess with shell=True on Windows
+    import os
+    if os.name == 'nt':  # Windows
+        data_process = subprocess.Popen(['python', 'send_data.py'], 
+                                       creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
+    else:  # Unix/Linux
+        data_process = subprocess.Popen(['python', 'send_data.py'], 
+                                       preexec_fn=os.setsid)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)

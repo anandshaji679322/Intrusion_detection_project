@@ -1,5 +1,0 @@
-[ 2024-10-23 13:52:21,157 ] 97 werkzeug - WARNING -  * Debugger is active!
-[ 2024-10-23 13:52:21,190 ] 97 werkzeug - INFO -  * Debugger PIN: 525-042-561
-[ 2024-10-23 13:54:23,778 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 13:54:23] "GET / HTTP/1.1" 200 -
-[ 2024-10-23 13:54:23,839 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 13:54:23] "[33mGET /styles.css HTTP/1.1[0m" 404 -
-[ 2024-10-23 13:54:37,713 ] 97 werkzeug - INFO - 127.0.0.1 - - [23/Oct/2024 13:54:37] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -

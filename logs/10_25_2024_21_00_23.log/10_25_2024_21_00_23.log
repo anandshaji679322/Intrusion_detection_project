@@ -1,7 +1,0 @@
-[ 2024-10-25 21:00:24,085 ] 97 werkzeug - WARNING -  * Debugger is active!
-[ 2024-10-25 21:00:24,753 ] 97 werkzeug - INFO -  * Debugger PIN: 173-526-570
-[ 2024-10-25 21:00:32,193 ] 97 werkzeug - INFO - 127.0.0.1 - - [25/Oct/2024 21:00:32] "POST /receive_data HTTP/1.1" 200 -
-[ 2024-10-25 21:00:32,209 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports', 'attack_cat', 'label']
-[ 2024-10-25 21:00:32,221 ] 78 root - ERROR - Error occurred during preprocessing
-[ 2024-10-25 21:00:32,221 ] 123 root - ERROR - Exception occurred in prediction pipeline
-[ 2024-10-25 21:09:55,787 ] 97 werkzeug - INFO -  * Detected change in 'D:\\files\\s7_project\\send_data.py', reloading

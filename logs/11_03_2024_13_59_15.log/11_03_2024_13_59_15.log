@@ -1,5 +1,0 @@
-[ 2024-11-03 13:59:15,380 ] 97 werkzeug - WARNING -  * Debugger is active!
-[ 2024-11-03 13:59:15,389 ] 97 werkzeug - INFO -  * Debugger PIN: 173-526-570
-[ 2024-11-03 13:59:16,665 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:59:16] "GET /results HTTP/1.1" 200 -
-[ 2024-11-03 13:59:19,654 ] 97 werkzeug - INFO - 127.0.0.1 - - [03/Nov/2024 13:59:19] "GET /results HTTP/1.1" 200 -
-[ 2024-11-03 13:59:20,499 ] 97 werkzeug - INFO -  * Detected change in 'D:\\files\\intrusion\\app.py', reloading

@@ -1,8 +1,0 @@
-[ 2024-10-25 21:13:07,652 ] 97 werkzeug - WARNING -  * Debugger is active!
-[ 2024-10-25 21:13:10,631 ] 97 werkzeug - INFO -  * Debugger PIN: 173-526-570
-[ 2024-10-25 21:13:30,184 ] 97 werkzeug - INFO - 127.0.0.1 - - [25/Oct/2024 21:13:30] "POST /receive_data HTTP/1.1" 200 -
-[ 2024-10-25 21:13:30,203 ] 88 root - INFO - Input dataset columns: ['id', 'dur', 'proto', 'service', 'state', 'spkts', 'dpkts', 'sbytes', 'dbytes', 'rate', 'sttl', 'dttl', 'sload', 'dload', 'sloss', 'dloss', 'sinpkt', 'dinpkt', 'sjit', 'djit', 'swin', 'stcpb', 'dtcpb', 'dwin', 'tcprtt', 'synack', 'ackdat', 'smean', 'dmean', 'trans_depth', 'response_body_len', 'ct_srv_src', 'ct_state_ttl', 'ct_dst_ltm', 'ct_src_dport_ltm', 'ct_dst_sport_ltm', 'ct_dst_src_ltm', 'is_ftp_login', 'ct_ftp_cmd', 'ct_flw_http_mthd', 'ct_src_ltm', 'ct_srv_dst', 'is_sm_ips_ports', 'attack_cat', 'label']
-[ 2024-10-25 21:13:30,240 ] 120 root - ERROR - Value error occurred: The feature names should match those that were passed during fit.
-Feature names unseen at fit time:
-- label
-

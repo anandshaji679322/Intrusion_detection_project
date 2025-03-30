@@ -1,5 +1,0 @@
-[ 2024-11-05 12:43:23,088 ] 97 werkzeug - WARNING -  * Debugger is active!
-[ 2024-11-05 12:43:23,091 ] 97 werkzeug - INFO -  * Debugger PIN: 136-839-380
-[ 2024-11-05 12:43:31,687 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 12:43:31] "GET /login?username=test9@gmail.com&password=123456789 HTTP/1.1" 200 -
-[ 2024-11-05 12:43:31,983 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 12:43:31] "GET /static/auth.js HTTP/1.1" 200 -
-[ 2024-11-05 12:43:31,994 ] 97 werkzeug - INFO - 127.0.0.1 - - [05/Nov/2024 12:43:31] "[36mGET /static/styles.css HTTP/1.1[0m" 304 -
