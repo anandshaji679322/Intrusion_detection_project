@@ -3,9 +3,14 @@ import pandas as pd
 import time
 import json
 import sys
+import os
 
-# Raw string - backslashes are treated literally
-file_path = r'C:\Users\ANAND\OneDrive\Desktop\Intrusion_detection_project\intrusion\data.xlsx'
+# Get the absolute path to the project directory
+project_dir = os.path.dirname(os.path.abspath(__file__))
+# Path to the realtime data folder
+realtime_data_dir = os.path.join(project_dir, 'realtime_data')
+# Path to the dynamically generated data file
+file_path = os.path.join(realtime_data_dir, 'data.xlsx')
 
 # URL of the Flask server
 url = 'http://localhost:8000'  # Base URL
@@ -30,6 +35,20 @@ def check_if_stopped():
 
 # Load the dataset when script starts
 print("Loading dataset...")
+# Check if the file exists
+if not os.path.exists(file_path):
+    print(f"Error: Data file {file_path} does not exist. Looking for alternatives.")
+    # Look for any Excel file in the realtime_data directory
+    excel_files = [f for f in os.listdir(realtime_data_dir) if f.endswith('.xlsx')]
+    if excel_files:
+        # Use the most recent Excel file
+        excel_files.sort(key=lambda x: os.path.getmtime(os.path.join(realtime_data_dir, x)), reverse=True)
+        file_path = os.path.join(realtime_data_dir, excel_files[0])
+        print(f"Using alternative file: {file_path}")
+    else:
+        print("No Excel files found in realtime_data directory.")
+        sys.exit(1)
+
 if file_path.endswith('.xlsx'):
     dataset = pd.read_excel(file_path)
 elif file_path.endswith('.csv'):

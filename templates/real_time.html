@@ -33,7 +33,8 @@
     <div class="outer-div" id="top-tab">
         <div class="top-square">
             <p class="in-heading">Real-Time Prediction</p>
-            <p>Click the button below to start sending data for real-time predictions!</p>
+            <p>Click the button below to start packet capture and real-time predictions!</p>
+            <p style="font-size: 0.9em; color: #555;">When you click Start, the system will capture network packets for about 60 seconds, extract features, and then make predictions.</p>
             <button id="start-button" class="button in-button">Start Predictions</button>
             <button id="stop-button" class="button in-button" style="background-color: #e74c3c; margin-left: 10px;" disabled>Stop Predictions</button>
             <div id="result"></div>
@@ -44,6 +45,7 @@
                         <tr>
                             <th>Timestamp</th>
                             <th>Predicted Attack</th>
+                            <th>Source IP</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,8 +74,11 @@
                         const newRow = tableBody.insertRow();
                         const timestampCell = newRow.insertCell(0);
                         const predictionCell = newRow.insertCell(1);
+                        const ipCell = newRow.insertCell(2);
+                        
                         timestampCell.textContent = result.timestamp;
                         predictionCell.textContent = result.prediction;
+                        ipCell.textContent = result.source_ip || "N/A";  // Display IP if available, otherwise N/A
                         
                         // Highlight rows with attacks
                         if (result.prediction !== "Normal") {
@@ -89,12 +94,13 @@
         
         document.getElementById('start-button').onclick = function() {
             const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = "<p>Starting data sending...</p>";
+            resultDiv.innerHTML = "<p>Starting packet capture (this will take about 60 seconds)...</p>";
 
             fetch('/start_sending_data')
                 .then(response => response.json())
                 .then(data => {
                     resultDiv.innerHTML = `<p>${data.message}</p>`;
+                    resultDiv.innerHTML += "<p>Watching for intrusion activities in real-time...</p>";
                     // Enable stop button and disable start button
                     document.getElementById('stop-button').disabled = false;
                     document.getElementById('start-button').disabled = true;
